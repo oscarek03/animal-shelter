@@ -1,84 +1,121 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schronisko dla zwierząt w Rzeszowie</title>
-    <link rel="stylesheet" href="css\bootstrap.min.css">
-    <link rel="stylesheet" href="css\style.css">
-    <script defer src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schronisko dla zwierząt w Rzeszowie</title>
+  <link rel="stylesheet" href="css\bootstrap.min.css">
+  <link rel="stylesheet" href="css\style.css">
+  <script defer src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/scripts.js"></script>
 </head>
-<!-- Fajne kolory
-03045e
-0077b6
-00b4d8
-90e0ef
-caf0f8 (kolor navbaru)
--->
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img id="logo" src="img/logo.png" width="120" alt=""></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Aktualności</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Zwierzęta</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Adopcje</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Wsparcie</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">O nas</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Kontakt</a>
-              </li>
-            </ul>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img id="logo" src="img/logo.png" width="120" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#aktualnosci">Aktualności</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#adopcje">Adopcje</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Wsparcie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">O nas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Kontakt</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="row" id="test"></div>
+  <div class="row">
+    <div class="row" id="aktualnosci">
+      <h3 style="text-align: center;font-weight: bolder;">Aktualności</h3>
+      <hr>
+      <div class="col-xs-0 col-sm-1"></div>
+      <div class="col-xs-4 col-sm-12 col-md-10">
+        <div id="uno">
+          <h3 style="text-align: center;">06.11.2024 r.</h3>
+          <hr>
+            <p style="text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus quos ipsam architecto minus reiciendis quibusdam esse sit, omnis enim libero, praesentium eveniet! Rem nobis assumenda cumque nam voluptates, laboriosam dolore? Repudiandae, voluptas? Tempore, commodi labore. Dignissimos tempora beatae esse temporibus nihil quia quisquam provident vel iure hic, molestias voluptatibus sint animi quos necessitatibus eum tempore delectus ipsa illo iste aperiam! Expedita ratione dolorem sunt quaerat aliquid quam ullam voluptate doloribus sit maiores ipsa culpa iure quas dolorum saepe illo suscipit ea, officiis enim architecto tempore facilis modi! Quae, non. Iusto.</p>
+        </div>
+      </div>
+      <div class="col-xs-0 col-sm-2"></div>
+      <div class="col-xs-4 col-md-10">
+        <div id="uno">
+          <h3 style="text-align: center;">07.11.2024 r.</h3>
+          <hr>
+            <p style="text-align: center;">Dam esse sit, omnis enim libero, praesentium eveniet! Rem nobis assumenda cumque nam voluptates, laboriosam dolore? Repudiandae, voluptas? Tempore, commodi labore. Dignissimos tempora beatae esse temporibus nihil quia quisquam provident vel iure hic, molestias voluptatibus sint animi quos necessitatibus eum tempore delectus ipsa illo iste aperiam! Expedita ratione dolorem sunt quaerat aliquid quam ullam voluptate doloribus sit maiores ipsa culpa iure quas dolorum saepe illo suscipit ea, officiis enim architecto tempore facilis modi! Quae, non. Iusto.</p>
+        </div>
+      </div>
+      <div class="col-xs-0 col-sm-1"></div>
+    </div>
+    <div class="row " id="test"></div>
+    <div class="row">
+      <main>
+        <h3 style="text-align: center;font-weight: bolder;" id="adopcje">Adopcje</h3>
+        <hr>
+        <p style="text-align: center;">Zobacz jakie to proste! </p><br>
+        <div id="carouselExampleCaptions" class="carousel slide">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
-        </div>
-      </nav>
-      <div class="container-fluid" id="test">
-      </div>
-      <div class="container-fluid">
-        <div class="row">
-            <main>
-              <div class="row py-4">
-                <div class="col-2"></div>
-                <div class="col-5"><img src="https://mikropsy.org/wp-content/uploads/elementor/thumbs/10-91-pc6jovzloq50oy38wmfke2zl6is9uirrcb5exwd1vc.jpg" width="400px" alt=""></div>
-                <div class="col-3"><h3>Aktualności</h3><hr>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta harum dicta consequuntur veritatis eos beatae velit quis! Distinctio, minus nam dolorum quis alias, eius blanditiis unde sequi libero nihil consequatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit explicabo fugiat dolorum, reiciendis tempore quaerat ex voluptatum sunt doloribus amet consequatur in autem dicta placeat at repellat porro nesciunt modi. <hr></div>
-                <div class="col-2"></div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="https://www.wkatowicach.eu/assets/pics/galerie/736/tn_DSC00559.JPG" class="d-block mx-auto mw-100" alt="..." width="600">
+              <div class="carousel-caption">
+                <h5><button type="button" class="btn btn-warning">Zaadoptuj kota</button></h5>
               </div>
-            </main>
-            
-        </div>
-        <div class="row">
-          <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-              <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-              </a>
-              <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
             </div>
-        
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-              <a href="index.php">.</a>
-            </ul>
-          </footer>
+            <div class="carousel-item">
+              <img src="https://napaluchu.waw.pl/wp-content/uploads/2021/03/165560474_3104870993078990_6555821472161004917_o.jpg" class="d-block mx-auto  mw-100" alt="..." width="600">
+              <div class="carousel-caption">
+                <h5><button type="button" class="btn btn-warning">Zaadoptuj psa</button></h5>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="https://leopardus.pl/data/include/cms/blog/klatka-dla-chomika.jpg" class="d-block mx-auto mw-100" alt="..." width="600">
+              <div class="carousel-caption">
+                <h5><button type="button" class="btn btn-warning">Zaadoptuj chomika</button></h5>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-      </div>
+        <br>
+        <hr>
+        <p style="text-align: center;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, sint tenetur quo veritatis excepturi pariatur cum unde beatae eveniet in, nihil expedita culpa eos nam consequuntur reiciendis debitis architecto temporibus?</p>
+        <hr>
+      </main>
+  </div>
+
+    <div class="row">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1"><svg class="bi" width="30" height="24">
+          <use xlink:href="#bootstrap"></use></svg></a> <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+        </div>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>
