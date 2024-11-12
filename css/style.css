@@ -10,9 +10,16 @@ body{
   background-attachment: fixed;
   background-size: cover;
 }
+.carousel-img{
+  -webkit-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
 
 .navbar{
-    background-color: #caf0f8;
+    background-color: #B9E5E8;
     font-weight: bold;
     padding: 10px 0 10px 100px;
   }
@@ -27,19 +34,18 @@ body{
 }
 
 main{
-  background-color: #caf0f8;
-  height: 700px;
+  background-color: #B9E5E8;
+  height: 750px;
   padding-top: 45px;
-  margin-left: 12px;
 }
 
 footer{
-  background-color: #caf0f8;
+  background-color: #B9E5E8;
   margin-top: 105px !important;
 }
 
 #aktualnosci{
-  background-color: #caf0f8;
+  background-color: #B9E5E8;
 }
 
 #aktualnosci > h3{
@@ -47,11 +53,12 @@ footer{
 }
 
 #uno{
-  background-color: whitesmoke;
+  background-color: #DFF2EB;
+  border: solid 1px #b3d7da;
   border-radius: 15px;
--webkit-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
--moz-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  -webkit-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 24px -3px rgba(66, 68, 90, 1);
   padding: 10px;
   margin-bottom: 35px;
 }
