@@ -1,4 +1,5 @@
 <?php
+putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
 header('Content-Type: application/json'); // Ustawienie JSON jako typ treści
 error_reporting(0); // Ukrywanie ostrzeżeń i błędów
 

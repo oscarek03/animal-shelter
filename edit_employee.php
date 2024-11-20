@@ -1,4 +1,6 @@
 <?php
+putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
+
 $host = "127.0.0.1";
 $port = "1521";
 $service_name = "XEPDB1";

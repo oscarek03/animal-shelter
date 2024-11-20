@@ -31,6 +31,7 @@
                 <select class="form-control" id="newAdres">
                     <option value="" disabled selected>Wybierz adres</option>
                     <?php
+                    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
                     $host = "127.0.0.1";
                     $port = "1521";
                     $service_name = "XEPDB1";
@@ -86,6 +87,7 @@
                 <!-- Opcje załadują się dynamicznie -->
                 <option value="" disabled selected>Wybierz adres</option>
                 <?php
+                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
                 // Adresy z bazy danych
                 $host = "127.0.0.1";
                 $port = "1521";
@@ -131,6 +133,7 @@
             </thead>
             <tbody>
                 <?php
+                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
                 $host = "127.0.0.1";
                 $port = "1521";
                 $service_name = "XEPDB1";
@@ -440,3 +443,8 @@ function submitEditForm() {
 
 </body>
 </html>
+
+
+
+
+
