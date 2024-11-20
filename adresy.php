@@ -14,6 +14,8 @@
 </head>
 <body>
     <div class="container">
+    <button class="custom-btn" onclick="showAddAddressAlert()">Dodaj Adres</button>
+
         <div id="editAddressAlert" class="custom-alert" style="display: none;">
             <form onsubmit="submitEditAddressForm(); return false;">
                 <button class="close-btn" type="button" onclick="hideEditAddressAlert()">X</button>
@@ -133,16 +135,26 @@
 
 
 function showAddAddressAlert() {
-    $('#addAddressAlert').show().draggable({
-        containment: 'parent', // Ograniczenie ruchu do elementu nadrzędnego
-        start: function(event, ui) {
-            $(this).addClass('draggable-helper');
-        },
-        stop: function(event, ui) {
-            $(this).removeClass('draggable-helper');
-        }
-    });
-}
+                $('#addAddressAlert').show().draggable({
+                    containment: 'parent', // Ograniczenie ruchu do elementu nadrzędnego
+                    start: function(event, ui) {
+                        $(this).addClass('draggable-helper');
+                    },
+                    drag: function(event, ui) {
+                        // Nic do dodania tutaj, tylko debugowanie
+                        console.log('Dragging:', ui.position);
+                    },
+                    stop: function(event, ui) {
+                        $(this).removeClass('draggable-helper');
+                    }
+                });
+                $('#addAddressAlert').css({
+                    top: '40%',
+                    left: '50%',
+                    marginTop: -$('#addAddressAlert').outerHeight() / 2,
+                    marginLeft: -$('#addAddressAlert').outerWidth() / 2
+                });
+            }
 
 function hideAddAddressAlert() {
     $('#addAddressAlert').hide();
@@ -194,7 +206,14 @@ function showEditAddressAlert(adresId) {
     $("#editNumerMieszkania").val(row.find("td:eq(4)").text());
 
     // Wyświetlenie formularza
-    $("#editAddressAlert").show();
+    $('#editAddressAlert').show().draggable({
+        containment: 'parent',
+    }).css({
+        top: '40%',
+        left: '50%',
+        marginTop: -$('#editAddressAlert').outerHeight() / 2,
+        marginLeft: -$('##editAddressAlert').outerWidth() / 2
+    });
 }
 
 function hideEditAddressAlert() {
@@ -242,7 +261,6 @@ function submitEditAddressForm() {
 
 
     </script>
-    <button class="custom-btn" onclick="showAddAddressAlert()">Dodaj Adres</button>
 
     <br><br><br><br>
     <div id="addAddressAlert" class="custom-alert">

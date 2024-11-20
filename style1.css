@@ -11,11 +11,11 @@
 }
 
 .container {
-    position: relative; /* Upewnienie się, że element nadrzędny ma ustawioną pozycję */
+    position: relative;
 }
 
 .draggable-helper {
-    z-index: 1100; /* Ustawienie wyższego z-index dla elementu przeciąganego */
+    z-index: 1100;
 }
 
 .close-btn {

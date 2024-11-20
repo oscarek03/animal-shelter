@@ -108,6 +108,7 @@
                 oci_close($conn);
                 ?>
             </select>
+            <button class="btn btn-plus" type="button" onclick="showAddAddressAlert()">+</button>
         </div>
         <input type="date" id="editDataZatrudnienia" class="form-control mb-2" placeholder="Data Zatrudnienia">
         <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
