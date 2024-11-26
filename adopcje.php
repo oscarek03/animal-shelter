@@ -21,61 +21,63 @@
             <select id="newZwierze" class="form-control mb-2">
                 <option value="" disabled selected>Wybierz zwierzę</option>
                 <?php
-                    // Ustawienie zmiennej środowiskowej dla kodowania
-                    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
+                    require_once 'db_connection.php';
 
-                    // Parametry połączenia do bazy danych Oracle
-                    $host = "127.0.0.1";
-                    $port = "1521";
-                    $service_name = "XEPDB1";
-                    $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                    $username = "schronisko";
-                    $password = "123";
+                    try {
+                        // Przygotowanie wywołania funkcji PL/SQL
+                        $sql = "BEGIN :cursor := get_available_animals(); END;";
+                        $stid = oci_parse($conn, $sql);
 
-                    // Połączenie z bazą danych
-                    $conn = oci_connect($username, $password, $dsn);
-                    if (!$conn) {
-                        $e = oci_error();
-                        die("Połączenie nieudane: " . $e['message']);
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<option value=\"" . htmlspecialchars($row['ID']) . "\">" . 
+                                htmlspecialchars($row['IMIE']) . " (" . htmlspecialchars($row['RASA']) . ") - " . 
+                                htmlspecialchars($row['NUMER']) . "</option>";
+                        }
+
+                        // Zwolnienie zasobów i zamknięcie połączenia
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
                     }
-
-                    // Zapytanie SQL pobierające dane o zwierzętach
-                    $sql = "SELECT z.ID, z.IMIE, z.RASA, k.NUMER 
-                    FROM ZWIERZETA z
-                    LEFT JOIN KOJCE k ON z.KOJEC_ID = k.KOJEC_ID
-                    WHERE z.STATUS = 'Dostepny'";
-                    
-                    $stid = oci_parse($conn, $sql);
-
-                    // Wykonanie zapytania
-                    if (!oci_execute($stid)) {
-                        $e = oci_error($stid);
-                        die("Błąd wykonania zapytania: " . $e['message']);
-                    }
-                    // Wyświetlenie wyników w formacie <option>
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        echo "<option value=\"" . $row['ID'] . "\">" . $row['IMIE'] . " (" . $row['RASA'] . ") - " . $row['NUMER'] . "</option>";
-                    }
-
-                    // Zwolnienie zasobów i zamknięcie połączenia
-                    oci_free_statement($stid);
-                    oci_close($conn);
                 ?>
-
             </select>
             <!-- Select dla pracowników -->
             <select id="newPracownik" class="form-control mb-2">
                 <option value="" disabled selected>Wybierz pracownika</option>
                 <?php
-                $conn = oci_connect($username, $password, $dsn);
-                $sql = "SELECT ID, IMIE, NAZWISKO FROM Pracownicy WHERE STANOWISKO = 'Koordynator Adopcji'";
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<option value=\"" . $row['ID'] . "\">" . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_close($conn);
+                    // Wywołanie funkcji PL/SQL
+                    $sql = "BEGIN :cursor := get_koordynatorzy_adopcji(); END;";
+                    $stid = oci_parse($conn, $sql);
+
+                    // Deklaracja kursora
+                    $cursor = oci_new_cursor($conn);
+
+                    // Przypisanie zmiennej kursora do wyjścia
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                    // Wykonanie procedury PL/SQL
+                    oci_execute($stid);
+                    oci_execute($cursor);  // Uruchomienie kursora
+
+                    // Iteracja wyników
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<option value=\"" . $row['ID'] . "\">" . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
+                    }
+
+                    // Zwolnienie zasobów
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
                 ?>
             </select>
             <!-- Select dla adresów -->
@@ -83,20 +85,37 @@
                 <select class="form-control" id="newAdres">
                     <option value="" disabled selected>Wybierz adres</option>
                     <?php
-                    $conn = oci_connect($username, $password, $dsn);
-                    $sql = "SELECT ID_ADRESU, MIASTO, KOD_POCZTOWY, ULICA, NUMER_DOMU, NUMER_MIESZKANIA FROM Adresy";
-                    $stid = oci_parse($conn, $sql);
-                    oci_execute($stid);
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        $adres = $row['MIASTO'] . ', ' . $row['KOD_POCZTOWY'] . ', ' . $row['ULICA'] . ' ' . $row['NUMER_DOMU'] . (isset($row['NUMER_MIESZKANIA']) ? '/' . $row['NUMER_MIESZKANIA'] : '');
-                        echo "<option value=\"" . $row['ID_ADRESU'] . "\">$adres</option>";
-                    }
-                    oci_free_statement($stid);
-                    oci_close($conn);
+                        try {
+                            // Przygotowanie wywołania funkcji PL/SQL
+                            $sql = "BEGIN :cursor := get_adresy(); END;";
+                            $stid = oci_parse($conn, $sql);
+
+                            // Deklaracja kursora jako parametr wyjściowy
+                            $cursor = oci_new_cursor($conn);
+                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                            // Wykonanie funkcji PL/SQL
+                            oci_execute($stid);
+                            oci_execute($cursor);
+
+                            // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                            while (($row = oci_fetch_assoc($cursor)) != false) {
+                                $adres = htmlspecialchars($row['MIASTO'] . ', ' . $row['KOD_POCZTOWY'] . ', ' . $row['ULICA'] . ' ' . $row['NUMER_DOMU'] . 
+                                        (isset($row['NUMER_MIESZKANIA']) ? '/' . $row['NUMER_MIESZKANIA'] : ''), ENT_QUOTES, 'UTF-8');
+                                
+                                echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">$adres</option>";
+                            }
+
+                            // Zwolnienie zasobów i zamknięcie połączenia
+                            oci_free_statement($stid);
+                            oci_free_statement($cursor);
+
+                        } catch (Exception $e) {
+                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                        }
                     ?>
                 </select>
                 <button class="btn btn-plus" onclick="showAddAddressAlert()">+</button>
-
             </div>
 
             <input type="text" id="newImie" class="form-control mb-2" placeholder="Imię" required>
@@ -121,34 +140,42 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $conn = oci_connect($username, $password, $dsn);
-                $sql = "SELECT 
-                    ra.ID_ADOPCJI, 
-                    z.IMIE || ' (' || z.RASA || ')' || ' - ' || k.NUMER  AS ZWIERZE, 
-                    p.IMIE || ' ' || p.NAZWISKO AS PRACOWNIK, 
-                    ad.MIASTO || ', ' || ad.KOD_POCZTOWY || ', ' || ad.ULICA || ' ' || ad.NUMER_DOMU || COALESCE('/' || ad.NUMER_MIESZKANIA, '') AS ADRES, 
-                    ra.DATA_ADOPCJI, ra.imie || ' ' || ra.nazwisko || ' ' || ra.numer_telefonu AS DANE_ADOPTUJACEGO
-                FROM REJESTR_ADOPCJI ra
-                LEFT JOIN PRACOWNICY p ON ra.PRACOWNIK_ID = p.ID
-                LEFT JOIN ZWIERZETA z ON ra.ZWIERZE_ID = z.ID
-                LEFT JOIN KOJCE k ON z.KOJEC_ID = k.KOJEC_ID
-                LEFT JOIN ADRESY ad ON ra.ADRES_ID = ad.ID_ADRESU";
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<tr>";
-                    echo "<td>" . $row['ZWIERZE'] . "</td>";
-                    echo "<td>" . $row['PRACOWNIK'] . "</td>";
-                    echo "<td>" . $row['ADRES'] . "</td>";
-                    echo "<td>" . $row['DATA_ADOPCJI'] . "</td>";
-                    echo "<td>" . $row['DANE_ADOPTUJACEGO'] . "</td>";
-                    echo "<td><button class='btn btn-danger' onclick='deleteAdoption(" . $row['ID_ADOPCJI'] . ")'>Usuń</button></td>";
-                    echo "</tr>";
+            <?php
+                try {
+                    // Przygotowanie wywołania funkcji PL/SQL
+                    $sql = "BEGIN :cursor := get_adoption_details(); END;";
+                    $stid = oci_parse($conn, $sql);
+
+                    // Deklaracja kursora jako parametr wyjściowy
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                    // Wykonanie funkcji PL/SQL
+                    oci_execute($stid);
+                    oci_execute($cursor);
+
+                    // Iteracja przez wyniki zwrócone przez kursor i generowanie wierszy w tabeli
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['ZWIERZE'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['PRACOWNIK'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['ADRES'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DATA_ADOPCJI'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DANE_ADOPTUJACEGO'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td><button class='btn btn-danger' onclick='deleteAdoption(" . $row['ID_ADOPCJI'] . ")'>Usuń</button></td>";
+                        echo "</tr>";
+                    }
+
+                    // Zwolnienie zasobów i zamknięcie połączenia
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
+                    oci_close($conn);
+
+                } catch (Exception $e) {
+                    echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
                 }
-                oci_free_statement($stid);
-                oci_close($conn);
                 ?>
+
             </tbody>
         </table>
     </div>

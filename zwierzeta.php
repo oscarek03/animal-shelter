@@ -34,35 +34,39 @@
             <div class="input-group mb-2">
                 <select class="form-control" id="newKojec">
                     <option value="" disabled selected>Wybierz kojec</option>
+
                     <?php
-                    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                    $host = "127.0.0.1";
-                    $port = "1521";
-                    $service_name = "XEPDB1";
-                    $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                    $username = "schronisko";
-                    $password = "123";
-                    // Połącz z bazą danych
-                    $conn = oci_connect($username, $password, $dsn);
-                    if (!$conn) {
-                        $e = oci_error();
-                        die("Połączenie nieudane: " . $e['message']);
-                    }
+                        require_once 'db_connection.php';
 
-                    // Pobierz dane z tabeli ADRESY
-                    $sql = "SELECT * FROM KOJCE";
-                    $stid = oci_parse($conn, $sql);
-                    oci_execute($stid);
+                        try {
+                            // Przygotowanie wywołania funkcji PL/SQL
+                            $sql = "BEGIN :cursor := get_kojce(); END;";
+                            $stid = oci_parse($conn, $sql);
 
-                    // Wstaw opcje do select
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
-                        echo "<option value=\"" . $row['KOJEC_ID'] . "\">$kojec</option>";
-                    }
+                            // Deklaracja kursora jako parametr wyjściowy
+                            $cursor = oci_new_cursor($conn);
+                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                    oci_free_statement($stid);
-                    oci_close($conn);
+                            // Wykonanie funkcji PL/SQL
+                            oci_execute($stid);
+                            oci_execute($cursor);
+
+                            // Pętla do generowania opcji select z wyników kursora
+                            while (($row = oci_fetch_assoc($cursor)) != false) {
+                                $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
+                                echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
+                            }
+
+                            // Zwolnienie zasobów i zamknięcie połączenia
+                            oci_free_statement($stid);
+                            oci_free_statement($cursor);
+
+                        } catch (Exception $e) {
+                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                        }
                     ?>
+
+
                 </select>
             </div>
             <input type="date" id="newData_przyjecia" class="form-control mb-2" placeholder="Data przyjecia">
@@ -92,35 +96,35 @@
             <div class="input-group mb-2">
                 <select class="form-control" id="editKojec">
                     <option value="" disabled selected>Wybierz kojec</option>
+
                     <?php
-                    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                    $host = "127.0.0.1";
-                    $port = "1521";
-                    $service_name = "XEPDB1";
-                    $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                    $username = "schronisko";
-                    $password = "123";
-                    // Połącz z bazą danych
-                    $conn = oci_connect($username, $password, $dsn);
-                    if (!$conn) {
-                        $e = oci_error();
-                        die("Połączenie nieudane: " . $e['message']);
-                    }
+                        try {
+                            // Przygotowanie wywołania funkcji PL/SQL
+                            $sql = "BEGIN :cursor := get_kojce(); END;";
+                            $stid = oci_parse($conn, $sql);
 
-                    // Pobierz dane z tabeli ADRESY
-                    $sql = "SELECT * FROM KOJCE";
-                    $stid = oci_parse($conn, $sql);
-                    oci_execute($stid);
+                            // Deklaracja kursora jako parametr wyjściowy
+                            $cursor = oci_new_cursor($conn);
+                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                    // Wstaw opcje do select
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
-                        echo "<option value=\"" . $row['KOJEC_ID'] . "\">$kojec</option>";
-                    }
+                            // Wykonanie funkcji PL/SQL
+                            oci_execute($stid);
+                            oci_execute($cursor);
 
-                    oci_free_statement($stid);
-                    oci_close($conn);
+                            // Pętla do generowania opcji select z wyników kursora
+                            while (($row = oci_fetch_assoc($cursor)) != false) {
+                                $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
+                                echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
+                            }
+
+                            // Zwolnienie zasobów i zamknięcie połączenia
+                            oci_free_statement($stid);
+                            oci_free_statement($cursor);
+                        } catch (Exception $e) {
+                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                        }
                     ?>
+
                 </select>
             </div>
         <input type="date" id="editData_przyjecia" class="form-control mb-2" placeholder="Data przyjecia">
@@ -148,75 +152,71 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                $host = "127.0.0.1";
-                $port = "1521";
-                $service_name = "XEPDB1";
-                $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                $username = "schronisko";
-                $password = "123";
-                $conn = oci_connect($username, $password, $dsn);
-                if (!$conn) {
-                    $e = oci_error();
-                    die("Połączenie nieudane: " . $e['message']);
-                }
+                
+            <?php
+                try {
+                    // Przygotowanie wywołania funkcji PL/SQL
+                    $sql = "BEGIN :cursor := get_animals_and_cages(); END;";
+                    $stid = oci_parse($conn, $sql);
 
-                // Modyfikujemy zapytanie, aby połączyć tabele i pobrać pełny adres.
-                $sql = "SELECT z.ID, z.IMIE, z.RASA, z.PLEC, z.STATUS, k.NUMER, z.DATA_PRZYJECIA, z.WIEK, z.TYP FROM Zwierzeta z
-                LEFT JOIN KOJCE k ON z.KOJEC_ID = k.KOJEC_ID";
-            
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
+                    // Deklaracja kursora jako parametr wyjściowy
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<tr id='" . $row['ID'] . "'>";
-                    echo "<td>" . $row['ID'] . "</td>";
-                    echo "<td>" . $row['IMIE'] . "</td>";
-                    echo "<td>" . $row['RASA'] . "</td>";
-                    echo "<td>" . $row['PLEC'] . "</td>";
-                    echo "<td>" . $row['STATUS'] . "</td>";
-                    echo "<td>" . $row['NUMER'] . "</td>";
-                    echo "<td>" . $row['DATA_PRZYJECIA'] . "</td>";
-                    echo "<td>" . $row['WIEK'] . "</td>";
-                    echo "<td>" . $row['TYP'] . "</td>";
+                    // Wykonanie funkcji PL/SQL
+                    oci_execute($stid);
+                    oci_execute($cursor);
+
+                    // Pętla do generowania wierszy tabeli z wyników kursora
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<tr id='" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . "'>";
+                        echo "<td>" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['IMIE'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['RASA'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['PLEC'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['STATUS'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['NUMER'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DATA_PRZYJECIA'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['WIEK'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['TYP'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        
+                        // Przygotowanie danych dla JavaScript
+                        $animalData = [
+                            "id" => $row['ID'],
+                            "imie" => $row['IMIE'],
+                            "rasa" => $row['RASA'],
+                            "plec" => $row['PLEC'],
+                            "status" => $row['STATUS'],
+                            "numer" => $row['NUMER'],
+                            "data_przyjecia" => $row['DATA_PRZYJECIA'],
+                            "wiek" => $row['WIEK'],
+                            "typ" => $row['TYP']
+                        ];
+                        $animalDataJson = htmlspecialchars(json_encode($animalData), ENT_QUOTES, 'UTF-8');
                     
-                    // Przygotowanie danych dla JavaScript
-                    $animalData = [
-                        "id" => $row['ID'],
-                        "imie" => $row['IMIE'],
-                        "rasa" => $row['RASA'],
-                        "plec" => $row['PLEC'],
-                        "status" => $row['STATUS'],
-                        "numer" => $row['NUMER'],
-                        "data_przyjecia" => $row['DATA_PRZYJECIA'],
-                        "wiek" => $row['WIEK'],
-                        "typ" => $row['TYP']
-                    ];
-                    $animalDataJson = htmlspecialchars(json_encode($animalData), ENT_QUOTES, 'UTF-8');
-                
-                    echo "<td>
-                        <button onclick='showEditAnimalAlert($animalDataJson)' class='btn btn-warning'>Edytuj</button>
-                        <br/>
-                        <button class='btn btn-danger' onclick='deleteAnimal(" . $row['ID'] . ")'>Usuń</button>
-                    </td>";
-                    
-                    echo "</tr>";
+                        echo "<td>
+                            <button onclick='showEditAnimalAlert($animalDataJson)' class='btn btn-warning'>Edytuj</button>
+                            <br/>
+                            <button class='btn btn-danger' onclick='deleteAnimal(" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . ")'>Usuń</button>
+                        </td>";
+                        
+                        echo "</tr>";
+                    }
+
+                    // Zwolnienie zasobów i zamknięcie połączenia
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
+                    oci_close($conn);
+
+                } catch (Exception $e) {
+                    echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
                 }
-                
-                
-                oci_free_statement($stid);
-                oci_close($conn);
-                ?>
+            ?>
+
+
             </tbody>
         </table>
     </div>
-
-
-
-
-
-
 
     <script>
         $(document).ready(function(){ 

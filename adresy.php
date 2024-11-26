@@ -48,59 +48,48 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // Ustawienie zmiennej środowiskowej dla kodowania znaków
-                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
+            <?php
+                require_once 'db_connection.php';
 
-                // Dane do połączenia z bazą danych Oracle
-                $host = "127.0.0.1";
-                $port = "1521";
-                $service_name = "XEPDB1";
-                $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                $username = "schronisko";
-                $password = "123";
+                try {
+                    // Przygotowanie wywołania funkcji PL/SQL
+                    $sql = "BEGIN :cursor := get_addresses(); END;";
+                    $stid = oci_parse($conn, $sql);
 
-                // Połączenie z bazą danych
-                $conn = oci_connect($username, $password, $dsn);
-                if (!$conn) {
-                    $e = oci_error();
-                    die("Połączenie nieudane: " . $e['message']);
+                    // Deklaracja kursora jako parametr wyjściowy
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                    // Wykonanie funkcji PL/SQL
+                    oci_execute($stid);
+                    oci_execute($cursor);
+
+                    // Iteracja przez wyniki zwrócone przez kursor i generowanie wierszy w tabeli
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<tr id='" . htmlspecialchars($row['ID_ADRESU'], ENT_QUOTES, 'UTF-8') . "'>";
+                        echo "<td>" . htmlspecialchars($row['MIASTO'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['KOD_POCZTOWY'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['ULICA'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['NUMER_DOMU'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>" . htmlspecialchars($row['NUMER_MIESZKANIA'], ENT_QUOTES, 'UTF-8') . "</td>";
+                        echo "<td>
+                                <button onclick=\"showEditAddressAlert(" . htmlspecialchars($row['ID_ADRESU'], ENT_QUOTES, 'UTF-8') . ")\" class=\"btn btn-warning\">Edytuj</button>
+                                <br/>
+                                <button class='btn btn-danger' onclick='deleteAddress(" . htmlspecialchars($row['ID_ADRESU'], ENT_QUOTES, 'UTF-8') . ")'>Usuń</button>
+                            </td>";
+                        echo "</tr>";
+                    }
+
+                    // Zwolnienie zasobów i zamknięcie połączenia
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
+                    oci_close($conn);
+
+                } catch (Exception $e) {
+                    echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
                 }
+            ?>
 
-                // Zapytanie SQL do pobrania adresów z bazy danych
-                $sql = "SELECT 
-                            ID_ADRESU, 
-                            MIASTO, 
-                            KOD_POCZTOWY, 
-                            ULICA, 
-                            NUMER_DOMU, 
-                            NUMER_MIESZKANIA 
-                        FROM Adresy";
-
-                // Wykonanie zapytania SQL
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
-
-                // Pętla do generowania wierszy tabeli z wyników zapytania
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<tr id='" . $row['ID_ADRESU'] . "'>";
-                    echo "<td>" . $row['MIASTO'] . "</td>";
-                    echo "<td>" . $row['KOD_POCZTOWY'] . "</td>";
-                    echo "<td>" . $row['ULICA'] . "</td>";
-                    echo "<td>" . $row['NUMER_DOMU'] . "</td>";
-                    echo "<td>" . $row['NUMER_MIESZKANIA'] . "</td>";
-                    echo "<td>
-                            <button onclick=\"showEditAddressAlert(" . $row['ID_ADRESU'] . ")\" class=\"btn btn-warning\">Edytuj</button>
-                            <br/>
-                            <button class='btn btn-danger' onclick='deleteAddress(" . $row['ID_ADRESU'] . ")'>Usuń</button>
-                          </td>";
-                    echo "</tr>";
-                }
-
-                // Zwolnienie zasobów i zamknięcie połączenia
-                oci_free_statement($stid);
-                oci_close($conn);
-                ?>
             </tbody>
         </table>
     </div>

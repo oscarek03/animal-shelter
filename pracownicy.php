@@ -31,34 +31,41 @@
                 <select class="form-control" id="newAdres">
                     <option value="" disabled selected>Wybierz adres</option>
                     <?php
-                    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                    $host = "127.0.0.1";
-                    $port = "1521";
-                    $service_name = "XEPDB1";
-                    $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                    $username = "schronisko";
-                    $password = "123";
-                    // Połącz z bazą danych
-                    $conn = oci_connect($username, $password, $dsn);
-                    if (!$conn) {
-                        $e = oci_error();
-                        die("Połączenie nieudane: " . $e['message']);
-                    }
+                        require_once 'db_connection.php';
 
-                    // Pobierz dane z tabeli ADRESY
-                    $sql = "SELECT ID_ADRESU, MIASTO, KOD_POCZTOWY, ULICA, NUMER_DOMU, NUMER_MIESZKANIA FROM Adresy";
-                    $stid = oci_parse($conn, $sql);
-                    oci_execute($stid);
+                        try {
+                            // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                            $sql = "BEGIN :cursor := get_adresy(); END;";
+                            $stid = oci_parse($conn, $sql);
 
-                    // Wstaw opcje do select
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        $adres = $row['MIASTO'] . ', ' . $row['KOD_POCZTOWY'] . ', ' . $row['ULICA'] . ' ' . $row['NUMER_DOMU'] . (isset($row['NUMER_MIESZKANIA']) ? '/' . $row['NUMER_MIESZKANIA'] : '');
-                        echo "<option value=\"" . $row['ID_ADRESU'] . "\">$adres</option>";
-                    }
+                            // Deklaracja kursora jako parametr wyjściowy
+                            $cursor = oci_new_cursor($conn);
+                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                    oci_free_statement($stid);
-                    oci_close($conn);
+                            // Wykonanie funkcji PL/SQL
+                            oci_execute($stid);
+                            oci_execute($cursor);
+
+                            // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                            while (($row = oci_fetch_assoc($cursor)) != false) {
+                                $adres = htmlspecialchars($row['MIASTO']) . ', ' . 
+                                        htmlspecialchars($row['KOD_POCZTOWY']) . ', ' . 
+                                        htmlspecialchars($row['ULICA']) . ' ' . 
+                                        htmlspecialchars($row['NUMER_DOMU']) . 
+                                        (!empty($row['NUMER_MIESZKANIA']) ? '/' . htmlspecialchars($row['NUMER_MIESZKANIA']) : '');
+                                        
+                                echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">$adres</option>";
+                            }
+
+                            // Zwolnienie zasobów
+                            oci_free_statement($stid);
+                            oci_free_statement($cursor);
+
+                        } catch (Exception $e) {
+                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                        }
                     ?>
+
                 </select>
                 <button class="btn btn-plus" onclick="showAddAddressAlert()">+</button>
             </div>
@@ -77,7 +84,7 @@
         <input type="number" id="editPensja" class="form-control mb-2" placeholder="Pensja">
         <select id="editStanowisko" class="form-control mb-2">
             <option value="" disabled selected>Wybierz stanowisko</option>
-            <option value="Koordynator adopcji">Koordynator adopcji</option>
+            <option value="Koordynator adopcji">Koordynator Adopcji</option>
             <option value="Sprzątacz">Sprzątacz</option>
             <option value="Opiekun Zwierząt">Opiekun Zwierząt</option>
             <option value="Weteryniarz">Weteryniarz</option>
@@ -87,28 +94,35 @@
                 <!-- Opcje załadują się dynamicznie -->
                 <option value="" disabled selected>Wybierz adres</option>
                 <?php
-                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                // Adresy z bazy danych
-                $host = "127.0.0.1";
-                $port = "1521";
-                $service_name = "XEPDB1";
-                $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                $username = "schronisko";
-                $password = "123";
-                $conn = oci_connect($username, $password, $dsn);
-                if (!$conn) {
-                    $e = oci_error();
-                    die("Połączenie nieudane: " . $e['message']);
-                }
-                $sql = "SELECT ID_ADRESU, MIASTO || ', ' || KOD_POCZTOWY || ', ' || ULICA || ' ' || NUMER_DOMU AS FULL_ADDRESS FROM Adresy";
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<option value=\"" . $row['ID_ADRESU'] . "\">" . $row['FULL_ADDRESS'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_close($conn);
+                    try {
+                        // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                        $sql = "BEGIN :cursor := get_formatted_addresses(); END;";
+                        $stid = oci_parse($conn, $sql);
+
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">" . 
+                                htmlspecialchars($row['FULL_ADDRESS']) . 
+                                "</option>";
+                        }
+
+                        // Zwolnienie zasobów
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                    }
                 ?>
+
             </select>
             <button class="btn btn-plus" type="button" onclick="showAddAddressAlert()">+</button>
         </div>
@@ -132,64 +146,60 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-                $host = "127.0.0.1";
-                $port = "1521";
-                $service_name = "XEPDB1";
-                $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-                $username = "schronisko";
-                $password = "123";
-                $conn = oci_connect($username, $password, $dsn);
-                if (!$conn) {
-                    $e = oci_error();
-                    die("Połączenie nieudane: " . $e['message']);
-                }
+            <?php
+                try {
+                    // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                    $sql = "BEGIN :cursor := get_pracownicy_with_address(); END;";
+                    $stid = oci_parse($conn, $sql);
 
-                // Modyfikujemy zapytanie, aby połączyć tabele i pobrać pełny adres.
-                $sql = "SELECT p.ID, p.IMIE, p.NAZWISKO, p.PENSJA, p.STANOWISKO, 
-                a.ULICA || ' ' || a.NUMER_DOMU || COALESCE('/' || a.NUMER_MIESZKANIA, '') || ', ' || a.MIASTO || ', ' || a.KOD_POCZTOWY AS FULL_ADDRESS, 
-                p.DATA_ZATRUDNIENIA
-                FROM Pracownicy p
-                LEFT JOIN Adresy a ON p.ADRES_ID = a.ID_ADRESU";
-            
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
+                    // Deklaracja kursora jako parametr wyjściowy
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<tr id='" . $row['ID'] . "'>";
-                    echo "<td>" . $row['IMIE'] . "</td>";
-                    echo "<td>" . $row['NAZWISKO'] . "</td>";
-                    echo "<td>" . $row['PENSJA'] . "</td>";
-                    echo "<td>" . $row['STANOWISKO'] . "</td>";
-                    echo "<td>" . $row['FULL_ADDRESS'] . "</td>";
-                    echo "<td>" . $row['DATA_ZATRUDNIENIA'] . "</td>";
-                    
-                    // Przygotowanie danych dla JavaScript
-                    $employeeData = [
-                        "id" => $row['ID'],
-                        "imie" => $row['IMIE'],
-                        "nazwisko" => $row['NAZWISKO'],
-                        "pensja" => $row['PENSJA'],
-                        "stanowisko" => $row['STANOWISKO'],
-                        "adresId" => $row['FULL_ADDRESS'],
-                        "dataZatrudnienia" => $row['DATA_ZATRUDNIENIA']
-                    ];
-                    $employeeDataJson = htmlspecialchars(json_encode($employeeData), ENT_QUOTES, 'UTF-8');
-                
-                    echo "<td>
-                        <button onclick='showEditEmployeeAlert($employeeDataJson)' class='btn btn-warning'>Edytuj</button>
-                        <br/>
-                        <button class='btn btn-danger' onclick='deleteEmployee(" . $row['ID'] . ")'>Usuń</button>
-                    </td>";
-                    
-                    echo "</tr>";
+                    // Wykonanie funkcji PL/SQL
+                    oci_execute($stid);
+                    oci_execute($cursor);
+
+                    // Iteracja przez wyniki zwrócone przez kursor
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<tr id='" . htmlspecialchars($row['ID']) . "'>";
+                        echo "<td>" . htmlspecialchars($row['IMIE']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['NAZWISKO']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['PENSJA']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['STANOWISKO']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['FULL_ADDRESS']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DATA_ZATRUDNIENIA']) . "</td>";
+
+                        // Przygotowanie danych dla JavaScript
+                        $employeeData = [
+                            "id" => $row['ID'],
+                            "imie" => $row['IMIE'],
+                            "nazwisko" => $row['NAZWISKO'],
+                            "pensja" => $row['PENSJA'],
+                            "stanowisko" => $row['STANOWISKO'],
+                            "adresId" => $row['FULL_ADDRESS'],
+                            "dataZatrudnienia" => $row['DATA_ZATRUDNIENIA']
+                        ];
+                        $employeeDataJson = htmlspecialchars(json_encode($employeeData), ENT_QUOTES, 'UTF-8');
+
+                        echo "<td>
+                                <button onclick='showEditEmployeeAlert($employeeDataJson)' class='btn btn-warning'>Edytuj</button>
+                                <br/>
+                                <button class='btn btn-danger' onclick='deleteEmployee(" . htmlspecialchars($row['ID']) . ")'>Usuń</button>
+                            </td>";
+                        echo "</tr>";
+                    }
+
+                    // Zwolnienie zasobów
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
+                    oci_close($conn);
+
+                } catch (Exception $e) {
+                    echo "Wystąpił błąd: " . $e->getMessage();
                 }
-                
-                
-                oci_free_statement($stid);
-                oci_close($conn);
-                ?>
+            ?>
+
             </tbody>
         </table>
     </div>

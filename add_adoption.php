@@ -1,21 +1,5 @@
 <?php
-    putenv('NLS_LANG=AMERICAN_AMERICA.UTF8');
-    header('Content-Type: application/json'); // Ustawienie JSON jako typ treści
-    error_reporting(0); // Ukrywanie ostrzeżeń i błędów
-
-    $host = "127.0.0.1";
-    $port = "1521";
-    $service_name = "XEPDB1";
-    $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$service_name)))";
-    $username = "schronisko";
-    $password = "123";
-
-    $conn = oci_connect($username, $password, $dsn);
-    if (!$conn) {
-        $e = oci_error();
-        echo json_encode(['success' => false, 'message' => $e['message']]);
-        exit;
-    }
+    require_once 'db_connection.php';
 
     // Pobieramy dane z formularza
     $id_zwierzecia = $_POST['id_zwierzecia'];
