@@ -1339,3 +1339,16 @@ EXCEPTION
 END;
 /
 
+BEGIN
+    DODAJ_DARCZYNCE('jan_kowalski', 'Jan', 'Kowalski', 'jan.kowalski@example.com');
+    DODAJ_DARCZYNCE('anna_nowak', 'Anna', 'Nowak', 'anna.nowak@example.com');
+    DODAJ_DARCZYNCE('piotr_wisniewski', 'Piotr', 'Wisniewski', 'piotr.wisniewski@example.com');
+    DODAJ_DARCZYNCE('katarzyna_kaminska', 'Katarzyna', 'Kaminska', 'katarzyna.kaminska@example.com');
+    DODAJ_DARCZYNCE('michal_wojcik', 'Michal', 'Wojcik', 'michal.wojcik@example.com');
+    DODAJ_DARCZYNCE('ewa_kaczmarek', 'Ewa', 'Kaczmarek', 'ewa.kaczmarek@example.com');
+    DODAJ_DARCZYNCE('tomasz_lewandowski', 'Tomasz', 'Lewandowski', 'tomasz.lewandowski@example.com');
+    DODAJ_DARCZYNCE('joanna_zielinska', 'Joanna', 'Zielinska', 'joanna.zielinska@example.com');
+    DODAJ_DARCZYNCE('robert_szymanski', 'Robert', 'Szymanski', 'robert.szymanski@example.com');
+    DODAJ_DARCZYNCE('maria_wozniak', 'Maria', 'Wozniak', 'maria.wozniak@example.com');
+END;
+/
