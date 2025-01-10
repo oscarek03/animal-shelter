@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Document</title>
-      <link rel="stylesheet" href="style1.css">
+      <link rel="stylesheet" href="../styles/style1.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -25,22 +25,23 @@
             <select id="newDarczyncaId" class="form-control mb-2">
                 <option value="">Wybierz...</option>
                 <?php
-                require_once 'db_connection.php';
-                try {
-                    // Pobranie listy darczyńców
-                    $sql = "SELECT ID, NAZWA_UZYTKOWNIKA FROM DARCZYNCY";
-                    $stid = oci_parse($conn, $sql);
-                    oci_execute($stid);
+                    require_once '../db_connection.php';
+                    
+                    try {
+                        // Pobranie listy darczyńców
+                        $sql = "SELECT ID, NAZWA_UZYTKOWNIKA FROM DARCZYNCY";
+                        $stid = oci_parse($conn, $sql);
+                        oci_execute($stid);
 
-                    // Dodanie opcji do selecta
-                    while (($row = oci_fetch_assoc($stid)) != false) {
-                        echo "<option value='" . htmlspecialchars($row['ID']) . "'>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</option>";
+                        // Dodanie opcji do selecta
+                        while (($row = oci_fetch_assoc($stid)) != false) {
+                            echo "<option value='" . htmlspecialchars($row['ID']) . "'>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</option>";
+                        }
+
+                        oci_free_statement($stid);
+                    } catch (Exception $e) {
+                        echo "<option value=''>Błąd wczytywania danych</option>";
                     }
-
-                    oci_free_statement($stid);
-                } catch (Exception $e) {
-                    echo "<option value=''>Błąd wczytywania danych</option>";
-                }
                 ?>
             </select>
 

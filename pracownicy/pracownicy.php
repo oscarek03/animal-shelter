@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Document</title>
-      <link rel="stylesheet" href="style1.css">
+      <link rel="stylesheet" href="../styles/style1.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -19,8 +19,8 @@
          <div id="addEmployeeAlert" class="custom-alert">
             <button class="close-btn" onclick="hideAddEmployeeAlert()">X</button>
             <h4>Dodaj pracownika</h4>
-            <h6>Imię:</h6>
-            <input type="text" id="newImie" class="form-control mb-2" placeholder="Imię">
+            <h6>Imie:</h6>
+            <input type="text" id="newImie" class="form-control mb-2" placeholder="Imie">
             <h6>Nazwisko:</h6>
             <input type="text" id="newNazwisko" class="form-control mb-2" placeholder="Nazwisko">
             <h6>Pensja:</h6>
@@ -29,19 +29,19 @@
             <select class="form-control mb-2" id="newStanowisko">
                <option value="" disabled selected>Wybierz stanowisko</option>
                <option value="Koordynator Adopcji" >Koordynator Adopcji</option>
-               <option value="Sprzątacz" >Sprzątacz</option>
-               <option value="Opiekun Zwierząt" >Opiekun Zwierząt</option>
-               <option value="Weteryniarz" >Weteryniarz</option>
+               <option value="Sprzatacz" >Sprzatacz</option>
+               <option value="Opiekun Zwierzat" >Opiekun Zwierzat</option>
+               <option value="Weteryniarz" >Weterynarz</option>
             </select>
             <h6>Adres:</h6>
             <div class="input-group mb-2">
                <select class="form-control" id="newAdres">
                   <option value="" disabled selected>Wybierz adres</option>
                   <?php
-                     require_once 'db_connection.php';
+                    require_once '../db_connection.php';
                      
                      try {
-                         // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                         // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
                          $sql = "BEGIN :cursor := get_adresy(); END;";
                          $stid = oci_parse($conn, $sql);
                      
@@ -53,7 +53,7 @@
                          oci_execute($stid);
                          oci_execute($cursor);
                      
-                         // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                         // Iteracja przez wyniki zwrocone przez kursor i generowanie opcji do select
                          while (($row = oci_fetch_assoc($cursor)) != false) {
                              $adres = htmlspecialchars($row['MIASTO']) . ', ' . 
                                      htmlspecialchars($row['KOD_POCZTOWY']) . ', ' . 
@@ -64,12 +64,12 @@
                              echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">$adres</option>";
                          }
                      
-                         // Zwolnienie zasobów
+                         // Zwolnienie zasobow
                          oci_free_statement($stid);
                          oci_free_statement($cursor);
                      
                      } catch (Exception $e) {
-                         echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                         echo "Wystapił bład: " . htmlspecialchars($e->getMessage());
                      }
                      ?>
                </select>
@@ -85,7 +85,7 @@
                <h4>Edytuj pracownika</h4>
                <input type="hidden" id="editId" class="form-control mb-2">
                <h6>Imie:</h6>
-               <input type="text" id="editImie" class="form-control mb-2" placeholder="Imię">
+               <input type="text" id="editImie" class="form-control mb-2" placeholder="Imie">
                <h6>Nazwisko:</h6>
                <input type="text" id="editNazwisko" class="form-control mb-2" placeholder="Nazwisko">
                <h6>Pensja:</h6>
@@ -94,18 +94,18 @@
                <select id="editStanowisko" class="form-control mb-2">
                   <option value="" disabled selected>Wybierz stanowisko</option>
                   <option value="Koordynator adopcji">Koordynator Adopcji</option>
-                  <option value="Sprzątacz">Sprzątacz</option>
-                  <option value="Opiekun Zwierząt">Opiekun Zwierząt</option>
+                  <option value="Sprzatacz">Sprzatacz</option>
+                  <option value="Opiekun Zwierzat">Opiekun Zwierzat</option>
                   <option value="Weteryniarz">Weteryniarz</option>
                </select>
                <h6>Adres:</h6>
                <div class="input-group mb-2">
                   <select class="form-control" id="editAdres">
-                     <!-- Opcje załadują się dynamicznie -->
+                     <!-- Opcje załaduja sie dynamicznie -->
                      <option value="" disabled selected>Wybierz adres</option>
                      <?php
                         try {
-                            // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                            // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
                             $sql = "BEGIN :cursor := get_formatted_addresses(); END;";
                             $stid = oci_parse($conn, $sql);
                         
@@ -117,19 +117,19 @@
                             oci_execute($stid);
                             oci_execute($cursor);
                         
-                            // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                            // Iteracja przez wyniki zwrocone przez kursor i generowanie opcji do select
                             while (($row = oci_fetch_assoc($cursor)) != false) {
                                 echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">" . 
                                     htmlspecialchars($row['FULL_ADDRESS']) . 
                                     "</option>";
                             }
                         
-                            // Zwolnienie zasobów
+                            // Zwolnienie zasobow
                             oci_free_statement($stid);
                             oci_free_statement($cursor);
                         
                         } catch (Exception $e) {
-                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                            echo "Wystapił bład: " . htmlspecialchars($e->getMessage());
                         }
                         ?>
                   </select>
@@ -144,7 +144,7 @@
          <table id="employeeTable" class="table table-bordered">
             <thead>
                <tr>
-                  <th>Imię</th>
+                  <th>Imie</th>
                   <th>Nazwisko</th>
                   <th>Wynagrodzenie</th>
                   <th>Stanowisko</th>
@@ -156,7 +156,7 @@
             <tbody>
                <?php
                   try {
-                      // Wywołanie funkcji PL/SQL i przypisanie zwróconego kursora
+                      // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
                       $sql = "BEGIN :cursor := get_pracownicy_with_address(); END;";
                       $stid = oci_parse($conn, $sql);
                   
@@ -168,7 +168,7 @@
                       oci_execute($stid);
                       oci_execute($cursor);
                   
-                      // Iteracja przez wyniki zwrócone przez kursor
+                      // Iteracja przez wyniki zwrocone przez kursor
                       while (($row = oci_fetch_assoc($cursor)) != false) {
                           echo "<tr id='" . htmlspecialchars($row['ID']) . "'>";
                           echo "<td>" . htmlspecialchars($row['IMIE']) . "</td>";
@@ -197,18 +197,32 @@
                           echo "</tr>";
                       }
                   
-                      // Zwolnienie zasobów
+                      // Zwolnienie zasobow
                       oci_free_statement($stid);
                       oci_free_statement($cursor);
                       oci_close($conn);
                   
                   } catch (Exception $e) {
-                      echo "Wystąpił błąd: " . $e->getMessage();
+                      echo "Wystapił bład: " . $e->getMessage();
                   }
                   ?>
             </tbody>
          </table>
-      </div>
+      
+         <div id="addAddressAlert" class="custom-alert">
+            <form onsubmit="submitAddressForm(); return false;">
+                <button class="close-btn" type="button" onclick="hideAddAddressAlert()">X</button>
+                <h4>Dodaj Adres</h4>
+                <input type="text" id="newMiasto" class="form-control mb-2" placeholder="Miasto" required>
+                <input type="text" id="newKodPocztowy" class="form-control mb-2" placeholder="Kod Pocztowy" required>
+                <input type="text" id="newUlica" class="form-control mb-2" placeholder="Ulica" >
+                <input type="text" id="newNumerDomu" class="form-control mb-2" placeholder="Numer Domu">
+                <input type="text" id="newNumerMieszkania" class="form-control mb-2" placeholder="Numer Mieszkania">
+                <button class="btn btn-primary" type="submit">Dodaj</button>
+            </form>
+        </div>
+
+        </div>
       <script>
          $(document).ready(function(){ 
              $('#employeeTable').DataTable();
@@ -229,7 +243,7 @@
          
                  function showAddEmployeeAlert() {
                  $('#addEmployeeAlert').show().draggable({
-                     containment: 'parent', // Ograniczenie ruchu do elementu nadrzędnego
+                     containment: 'parent', // Ograniczenie ruchu do elementu nadrzednego
                      start: function(event, ui) {
                          $(this).addClass('draggable-helper');
                      },
@@ -257,7 +271,7 @@
          }
          
          function submitForm() {
-            // Pobranie wartości z pól formularza
+            // Pobranie wartości z pol formularza
             var imie = $('#newImie').val();
             var nazwisko = $('#newNazwisko').val();
             var pensja = $('#newPensja').val();
@@ -265,9 +279,9 @@
             var adresId = $('#newAdres').val();
             var dataZatrudnienia = $('#newDataZatrudnienia').val();
             
-            // Wysłanie danych do skryptu PHP za pomocą AJAX
+            // Wysłanie danych do skryptu PHP za pomoca AJAX
             $.ajax({
-                url: 'add_employee.php', // Skrypt PHP obsługujący dodawanie pracownika
+                url: 'add_employee.php', // Skrypt PHP obsługujacy dodawanie pracownika
                 type: 'POST',
                 data: {
                     imie: imie,
@@ -285,21 +299,21 @@
                         hideAddEmployeeAlert();
                         location.reload(); // Odświeżenie strony w celu aktualizacji tabeli
                     } else {
-                        // Wyświetlenie komunikatu o błędzie
-                        alert('Wystąpił błąd: ' + response.message);
+                        // Wyświetlenie komunikatu o błedzie
+                        alert('Wystapił bład: ' + response.message);
                     }
                 },
                 error: function(xhr, status, error) {
-                    // Akcje w przypadku błędu
-                    alert('Wystąpił błąd: ' + error);
+                    // Akcje w przypadku błedu
+                    alert('Wystapił bład: ' + error);
                 }
             });
          }
          
          function deleteEmployee(pracownikId) {
-            // Wysłanie danych do skryptu PHP za pomocą AJAX
+            // Wysłanie danych do skryptu PHP za pomoca AJAX
                 $.ajax({
-                    url: 'delete_employee.php', // Skrypt PHP obsługujący usuwanie pracownika
+                    url: 'delete_employee.php', // Skrypt PHP obsługujacy usuwanie pracownika
                     type: 'POST',
                     data: {
                         id: pracownikId
@@ -307,24 +321,24 @@
                     dataType: 'json', // Oczekujemy odpowiedzi w formacie JSON
                     success: function(response) {
                         if (response.success) {
-                            // Akcje po pomyślnym usunięciu pracownika (np. odświeżenie tabeli)
-                            alert('Pracownik został usunięty!');
+                            // Akcje po pomyślnym usunieciu pracownika (np. odświeżenie tabeli)
+                            alert('Pracownik został usuniety!');
                             location.reload(); // Odświeżenie strony w celu aktualizacji tabeli
                         } else {
-                            // Wyświetlenie komunikatu o błędzie
-                            alert('Wystąpił błąd: ' + response.message);
+                            // Wyświetlenie komunikatu o błedzie
+                            alert('Wystapił bład: ' + response.message);
                         }
                     },
                     error: function(xhr, status, error) {
-                        // Akcje w przypadku błędu
-                        alert('Wystąpił błąd: ' + error);
+                        // Akcje w przypadku błedu
+                        alert('Wystapił bład: ' + error);
                 }
             });
          }
          
          function showAddAddressAlert() {
          $('#addAddressAlert').show().draggable({
-         containment: 'parent', // Ograniczenie ruchu do elementu nadrzędnego
+         containment: 'parent', // Ograniczenie ruchu do elementu nadrzednego
          start: function(event, ui) {
              $(this).addClass('draggable-helper');
          },
@@ -339,16 +353,16 @@
          }
          
          function submitAddressForm() {
-         // Pobranie wartości z pól formularza
+         // Pobranie wartości z pol formularza
             var miasto = $('#newMiasto').val();
             var kodPocztowy = $('#newKodPocztowy').val();
             var ulica = $('#newUlica').val();
             var numerDomu = $('#newNumerDomu').val();
             var numerMieszkania = $('#newNumerMieszkania').val();
          
-         // Wysłanie danych do skryptu PHP za pomocą AJAX
+         // Wysłanie danych do skryptu PHP za pomoca AJAX
             $.ajax({
-                url: 'add_address.php', // Skrypt PHP obsługujący dodawanie adresu
+                url: 'add_address.php', // Skrypt PHP obsługujacy dodawanie adresu
                 type: 'POST',
                 data: {
                     miasto: miasto,
@@ -364,11 +378,11 @@
                         hideAddAddressAlert();
                         location.reload(); // Odświeżenie strony w celu aktualizacji tabeli
                     } else {
-                        alert('Wystąpił błąd: ' + response.message);
+                        alert('Wystapił bład: ' + response.message);
                     }
                 },
                 error: function(xhr, status, error) {
-                    alert('Wystąpił błąd: ' + error);
+                    alert('Wystapił bład: ' + error);
                 }
                 });
             }
@@ -407,7 +421,7 @@
             var dataZatrudnienia = $('#editDataZatrudnienia').val();
             
             $.ajax({
-            url: 'edit_employee.php', // Skrypt PHP obsługujący edycję
+            url: 'edit_employee.php', // Skrypt PHP obsługujacy edycje
             type: 'POST',
             data: {
                 id: id,
@@ -425,29 +439,16 @@
                     hideEditEmployeeAlert();
                     location.reload();
                 } else {
-                    alert('Wystąpił błąd: ' + response.message);
+                    alert('Wystapił bład: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
-                alert('Wystąpił błąd: ' + error);
+                alert('Wystapił bład: ' + error);
             }
             });
          }
          
          
       </script>
-      <br><br><br><br>
-      <div id="addAddressAlert" class="custom-alert">
-         <form onsubmit="submitAddressForm(); return false;">
-            <button class="close-btn" type="button" onclick="hideAddAddressAlert()">X</button>
-            <h4>Dodaj Adres</h4>
-            <input type="text" id="newMiasto" class="form-control mb-2" placeholder="Miasto" required>
-            <input type="text" id="newKodPocztowy" class="form-control mb-2" placeholder="Kod Pocztowy" required>
-            <input type="text" id="newUlica" class="form-control mb-2" placeholder="Ulica" >
-            <input type="text" id="newNumerDomu" class="form-control mb-2" placeholder="Numer Domu">
-            <input type="text" id="newNumerMieszkania" class="form-control mb-2" placeholder="Numer Mieszkania">
-            <button class="btn btn-primary" type="submit">Dodaj</button>
-         </form>
-      </div>
    </body>
 </html>

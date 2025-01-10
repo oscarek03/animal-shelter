@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Adopcje</title>
-      <link rel="stylesheet" href="style1.css">
+      <link rel="stylesheet" href="../styles/style1.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -23,35 +23,35 @@
             <select id="newZwierze" class="form-control mb-2">
                <option value="" disabled selected>Wybierz zwierzę</option>
                <?php
-                  require_once 'db_connection.php';
-                  
-                  try {
-                      // Przygotowanie wywołania funkcji PL/SQL
-                      $sql = "BEGIN :cursor := get_available_animals(); END;";
-                      $stid = oci_parse($conn, $sql);
-                  
-                      // Deklaracja kursora jako parametr wyjściowy
-                      $cursor = oci_new_cursor($conn);
-                      oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                  
-                      // Wykonanie funkcji PL/SQL
-                      oci_execute($stid);
-                      oci_execute($cursor);
-                  
-                      // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
-                      while (($row = oci_fetch_assoc($cursor)) != false) {
-                          echo "<option value=\"" . htmlspecialchars($row['ID']) . "\">" .
-                              htmlspecialchars($row['IMIE']) . " (" . htmlspecialchars($row['RASA']) . ") - " . 
-                              htmlspecialchars($row['NUMER']) . "</option>";
-                      }
-                  
-                      // Zwolnienie zasobów i zamknięcie połączenia
-                      oci_free_statement($stid);
-                      oci_free_statement($cursor);
-                  
-                  } catch (Exception $e) {
-                      echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-                  }
+                    require_once '../db_connection.php';
+                    
+                    try {
+                        // Przygotowanie wywołania funkcji PL/SQL
+                        $sql = "BEGIN :cursor := get_available_animals(); END;";
+                        $stid = oci_parse($conn, $sql);
+                    
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+                    
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+                    
+                        // Iteracja przez wyniki zwrócone przez kursor i generowanie opcji do select
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<option value=\"" . htmlspecialchars($row['ID']) . "\">" .
+                                htmlspecialchars($row['IMIE']) . " (" . htmlspecialchars($row['RASA']) . ") - " . 
+                                htmlspecialchars($row['NUMER']) . "</option>";
+                        }
+                    
+                        // Zwolnienie zasobów i zamknięcie połączenia
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                    
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                    }
                   ?>
             </select>
             <!-- Select dla pracowników -->

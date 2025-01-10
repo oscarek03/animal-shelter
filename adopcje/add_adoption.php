@@ -1,5 +1,5 @@
 <?php
-    require_once 'db_connection.php';
+    require_once '../db_connection.php';
 
     // Pobieramy dane z formularza
     $id_zwierzecia = $_POST['id_zwierzecia'];

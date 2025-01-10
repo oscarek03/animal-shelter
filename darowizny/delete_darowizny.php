@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connection.php';
+    require_once '../db_connection.php';
 
 // Pobieramy ID darowizny do usunięcia
 $darowizna_id = $_POST['id'];

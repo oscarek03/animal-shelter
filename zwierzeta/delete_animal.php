@@ -1,6 +1,5 @@
 <?php
-    require_once 'db_connection.php';
-
+    require_once '../db_connection.php';
 
     // Pobranie ID zwierzęcia do usunięcia
     $animal_id = $_POST['id'];

@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Document</title>
-      <link rel="stylesheet" href="style1.css">
+      <link rel="stylesheet" href="../styles/style1.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -19,23 +19,28 @@
          <div id="addAnimalAlert" class="custom-alert">
             <button class="close-btn" onclick="hideaddAnimalAlert()">X</button>
             <h4>Dodaj zwierze</h4>
+            <h6>Imię:</h6>
             <input type="text" id="newImie" class="form-control mb-2" placeholder="Imię">
+            <h6>Rasa:</h6>
             <input type="text" id="newRasa" class="form-control mb-2" placeholder="Rasa">
+            <h6>Płeć:</h6>
             <select class="form-control mb-2" id="newPlec">
                <option value="" disabled selected>Wybierz plec</option>
                <option value="Male">Male</option>
                <option value="Female">Female</option>
             </select>
+            <h6>Status:</h6>
             <select class="form-control mb-2" id="newStatus">
                <option value="" disabled selected>Wybierz status</option>
                <option value="Dostepny">Dostepny</option>
                <option value="Adoptowany">Adoptowany</option>
             </select>
+            <h6>Kojec:</h6>
             <div class="input-group mb-2">
                <select class="form-control" id="newKojec">
                   <option value="" disabled selected>Wybierz kojec</option>
                   <?php
-                     require_once 'db_connection.php';
+                    require_once '../db_connection.php';
                      
                      try {
                          // Przygotowanie wywołania funkcji PL/SQL
@@ -52,7 +57,7 @@
                      
                          // Pętla do generowania opcji select z wyników kursora
                          while (($row = oci_fetch_assoc($cursor)) != false) {
-                             $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
+                             $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'] . ', ' . $row['WIELKOSC'];
                              echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
                          }
                      
@@ -66,8 +71,11 @@
                      ?>
                </select>
             </div>
+            <h6>Data przyjęcia:</h6>
             <input type="date" id="newData_przyjecia" class="form-control mb-2" placeholder="Data przyjecia">
+            <h6>Wiek:</h6>
             <input type="text" id="newWiek" class="form-control mb-2" placeholder="Wiek">
+            <h6>Typ:</h6>
             <input type="text" id="newTyp" class="form-control mb-2" placeholder="Typ">
             <button class="btn btn-primary" onclick="submitForm()">Dodaj</button>
          </div>
@@ -107,7 +115,7 @@
                         
                             // Pętla do generowania opcji select z wyników kursora
                             while (($row = oci_fetch_assoc($cursor)) != false) {
-                                $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'];
+                                $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'] . ", " . $row['WIELKOSC'];
                                 echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
                             }
                         
@@ -165,7 +173,7 @@
                           echo "<td>" . htmlspecialchars($row['RASA'], ENT_QUOTES, 'UTF-8') . "</td>";
                           echo "<td>" . htmlspecialchars($row['PLEC'], ENT_QUOTES, 'UTF-8') . "</td>";
                           echo "<td>" . htmlspecialchars($row['STATUS'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['NUMER'], ENT_QUOTES, 'UTF-8') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['NUMER'], ENT_QUOTES, 'UTF-8') . ", " . htmlspecialchars($row['WIELKOSC'], ENT_QUOTES, 'UTF-8') . "</td>";
                           echo "<td>" . htmlspecialchars($row['DATA_PRZYJECIA'], ENT_QUOTES, 'UTF-8') . "</td>";
                           echo "<td>" . htmlspecialchars($row['WIEK'], ENT_QUOTES, 'UTF-8') . "</td>";
                           echo "<td>" . htmlspecialchars($row['TYP'], ENT_QUOTES, 'UTF-8') . "</td>";
@@ -187,7 +195,6 @@
                           echo "<td>
                               <button onclick='showEditAnimalAlert($animalDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
                               <button class='btn btn-light' onclick='deleteAnimal(" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . ")'><i class='fa fa-trash'></i></button>
-                              <button onclick='' class='btn btn-light'><i class='fa fa-user'></i></button>
                           </td>";
                           
                           echo "</tr>";
@@ -244,13 +251,16 @@
                      marginLeft: -$('#addAnimalAlert').outerWidth() / 2
                  });
              }
-         
-         
+      
          
          
          function hideaddAnimalAlert() {
              $('#addAnimalAlert').hide();
          }
+
+
+
+
          
          function submitForm() {
              // Pobranie wartości z pól formularza

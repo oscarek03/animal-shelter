@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connection.php';
+    require_once '../db_connection.php';
 
 // Pobieranie danych z żądania POST
 $id = $_POST['id'];

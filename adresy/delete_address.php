@@ -1,15 +1,15 @@
 <?php
-    require_once 'db_connection.php';
+    require_once '../db_connection.php';
 
-    // Pobieramy ID pracownika do usunięcia
-    $pracownik_id = $_POST['id'];
+    // Pobieramy ID adresu do usunięcia
+    $adres_id = $_POST['id'];
 
     // Przygotowujemy wywołanie procedury
-    $sql = "BEGIN usun_pracownika(:id); END;";
+    $sql = "BEGIN usun_adres(:id); END;";
     $stid = oci_parse($conn, $sql);
 
     // Bindowanie parametru ID
-    oci_bind_by_name($stid, ":id", $pracownik_id);
+    oci_bind_by_name($stid, ":id", $adres_id);
 
     // Wykonujemy zapytanie
     $result = oci_execute($stid);

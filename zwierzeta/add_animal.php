@@ -1,9 +1,7 @@
 <?php
-    require_once 'db_connection.php';
-
-
+    require_once '../db_connection.php';
+    
     // Pobieramy dane z formularza
-    $id = $_POST['id'];
     $imie = $_POST['imie'];
     $rasa = $_POST['rasa'];
     $plec = $_POST['plec'];
@@ -14,21 +12,10 @@
     $typ = $_POST['typ'];
 
     // Przygotowujemy wywołanie procedury
-    $sql = "BEGIN edytuj_zwierze(
-        :id, 
-        :imie, 
-        :rasa, 
-        :plec, 
-        :status, 
-        :kojec_id, 
-        TO_DATE(:data_przyjecia, 'YYYY-MM-DD'), 
-        :wiek, 
-        :typ
-    ); END;";
+    $sql = "BEGIN dodaj_zwierze(:imie, :rasa, :plec, :status, :kojec_id, TO_DATE(:data_przyjecia, 'YYYY-MM-DD'), :wiek, :typ); END;";
     $stid = oci_parse($conn, $sql);
 
     // Bindowanie parametrów
-    oci_bind_by_name($stid, ":id", $id);
     oci_bind_by_name($stid, ":imie", $imie);
     oci_bind_by_name($stid, ":rasa", $rasa);
     oci_bind_by_name($stid, ":plec", $plec);
