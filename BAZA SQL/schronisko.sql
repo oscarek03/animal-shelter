@@ -10,12 +10,12 @@
 --  DDL for Sequence DARCZYNCY_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SCHRONISKO"."DARCZYNCY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 80 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "SCHRONISKO"."DARCZYNCY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 74 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence DAROWIZNY_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SCHRONISKO"."DAROWIZNY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 81 CACHE 25 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "SCHRONISKO"."DAROWIZNY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 56 CACHE 25 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence DEPT_SEQ
 --------------------------------------------------------
@@ -45,12 +45,12 @@
 --  DDL for Sequence SEQ_ADOPCJE_ID
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SCHRONISKO"."SEQ_ADOPCJE_ID"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 18 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "SCHRONISKO"."SEQ_ADOPCJE_ID"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence ZWIERZETA_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SCHRONISKO"."ZWIERZETA_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 54 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "SCHRONISKO"."ZWIERZETA_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 34 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Table ADRESY
 --------------------------------------------------------
@@ -193,47 +193,51 @@
   TABLESPACE "USERS" ;
 REM INSERTING into SCHRONISKO.ADRESY
 SET DEFINE OFF;
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('1','Warszawa','00-001','Marsza?kowska','12','1');
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('2','Kraków','30-001','Floria?ska','25','2');
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('3','Pozna?','60-001','Wielka','15','3');
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('4','Wroc?aw','50-001','?widnicka','8','4');
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('5','Gda?sk','80-001','D?uga','19','5');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('1','Warszawa','00-001','Marszałkowska','12','1');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('2','Kraków','30-001','Floriańska','25','2');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('3','Poznań','60-001','Wielka','15','3');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('4','Wrocław','50-001','Świdnicka','8','4');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('5','Gdańsk','80-001','Długa','19','5');
 Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('6','Szczecin','70-001','Pilsudskiego','3','6');
-Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('8','?ód?','90-001','Piotrkowska','11','8');
+Insert into SCHRONISKO.ADRESY (ID_ADRESU,MIASTO,KOD_POCZTOWY,ULICA,NUMER_DOMU,NUMER_MIESZKANIA) values ('8','Łódź','90-001','Piotrkowska','11','8');
 REM INSERTING into SCHRONISKO.DARCZYNCY
 SET DEFINE OFF;
+Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('64','jan_kowalski','Jan','Kowalski','jan.kowalski@example.com');
+Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('65','anna_nowak','Anna','Nowak','anna.nowak@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('66','piotr_wisniewski','Piotr','Wisniewski','piotr.wisniewski@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('67','katarzyna_kaminska','Katarzyna','Kaminska','katarzyna.kaminska@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('68','michal_wojcik','Michal','Wojcik','michal.wojcik@example.com');
+Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('69','ewa_kaczmarek','Ewa','Kaczmarek','ewa.kaczmarek@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('70','tomasz_lewandowski','Tomasz','Lewandowski','tomasz.lewandowski@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('71','joanna_zielinska','Joanna','Zielinska','joanna.zielinska@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('72','robert_szymanski','Robert','Szymanski','robert.szymanski@example.com');
 Insert into SCHRONISKO.DARCZYNCY (ID,NAZWA_UZYTKOWNIKA,IMIE,NAZWISKO,MAIL) values ('73','maria_wozniak','Maria','Wozniak','maria.wozniak@example.com');
 REM INSERTING into SCHRONISKO.KOJCE
 SET DEFINE OFF;
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('1','Male','K01DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('2','Sredni','K02DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('3','Duzy','K03DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('4','Maly','K04DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('5','Sredni','K05DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('6','Duzy','K06DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('7','Maly','K07DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('8','Sredni','K08DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('9','Duzy','K09DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('10','Sredni','K10DOG');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('11','Maly','K11CAT');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('12','Sredni','K12CAT');
-Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('13','Duzy','K13CAT');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('1','Mały','K01DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('2','Średni','K02DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('3','Duży','K03DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('4','Mały','K04DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('5','Średni','K05DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('6','Duży','K06DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('7','Mały','K07DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('8','Średni','K08DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('9','Duży','K09DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('10','Średni','K10DOG');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('11','Mały','K11CAT');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('12','Średni','K12CAT');
+Insert into SCHRONISKO.KOJCE (KOJEC_ID,WIELKOSC,NUMER) values ('13','Duży','K13CAT');
 REM INSERTING into SCHRONISKO.PRACOWNICY
 SET DEFINE OFF;
 Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('1','Anna','Kowalska','4500','Weterynarz','1',to_date('23/05/10','RR/MM/DD'));
 Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('2','Piotr','Nowak','5000','Weterynarz','2',to_date('22/11/23','RR/MM/DD'));
-Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('3','Ewa','Zieli?ska','2500','Sprzatacz','3',to_date('24/01/01','RR/MM/DD'));
-Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('4','Krzysztof','Wójcik','2600','Sprzatacz','4',to_date('23/09/10','RR/MM/DD'));
-Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('5','Monika','Lewandowska','3000','Opiekun Zwierzat','5',to_date('24/02/15','RR/MM/DD'));
-Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('6','Tomasz','Szyma?ski','3200','Opiekun Zwierzat','6',to_date('23/06/12','RR/MM/DD'));
-Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('7','Kacper','Szaleniec','5900','Koordynator Adopcji','3',to_date('24/12/02','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('3','Ewa','Zielińska','2500','Sprzątacz','3',to_date('24/01/01','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('4','Krzysztof','Wójcik','2600','Sprzątacz','4',to_date('23/09/10','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('5','Monika','Lewandowska','3000','Opiekun Zwierząt','5',to_date('24/02/15','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('6','Tomasz','Szymański','3200','Opiekun Zwierząt','6',to_date('23/06/12','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('31','123','123','123','Koordynator Adopcji','3',to_date('24/12/02','RR/MM/DD'));
 Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('8','Marek','Jankowski','6000','Koordynator Adopcji','8',to_date('22/08/05','RR/MM/DD'));
+Insert into SCHRONISKO.PRACOWNICY (ID,IMIE,NAZWISKO,PENSJA,STANOWISKO,ADRES_ID,DATA_ZATRUDNIENIA) values ('7','Kacper','Szaleniec','5900','Koordynator Adopcji','3',to_date('24/12/02','RR/MM/DD'));
 REM INSERTING into SCHRONISKO.PRACOWNIK_ZWIERZETA
 SET DEFINE OFF;
 Insert into SCHRONISKO.PRACOWNIK_ZWIERZETA (PRACOWNIK_ID,ZWIERZE_ID) values ('1','1');
@@ -298,28 +302,32 @@ Insert into SCHRONISKO.PRACOWNIK_ZWIERZETA (PRACOWNIK_ID,ZWIERZE_ID) values ('8'
 Insert into SCHRONISKO.PRACOWNIK_ZWIERZETA (PRACOWNIK_ID,ZWIERZE_ID) values ('8','34');
 REM INSERTING into SCHRONISKO.REJESTR_ADOPCJI
 SET DEFINE OFF;
+Insert into SCHRONISKO.REJESTR_ADOPCJI (ID_ADOPCJI,DATA_ADOPCJI,ZWIERZE_ID,PRACOWNIK_ID,IMIE,NAZWISKO,ADRES_ID,NUMER_TELEFONU) values ('19',to_date('25/01/07','RR/MM/DD'),'6','8','Zbigniew','Jankowski','3','33344455');
+Insert into SCHRONISKO.REJESTR_ADOPCJI (ID_ADOPCJI,DATA_ADOPCJI,ZWIERZE_ID,PRACOWNIK_ID,IMIE,NAZWISKO,ADRES_ID,NUMER_TELEFONU) values ('20',to_date('25/01/07','RR/MM/DD'),'9','8','asdasd','asdasdas','4','33344455');
 Insert into SCHRONISKO.REJESTR_ADOPCJI (ID_ADOPCJI,DATA_ADOPCJI,ZWIERZE_ID,PRACOWNIK_ID,IMIE,NAZWISKO,ADRES_ID,NUMER_TELEFONU) values ('17',to_date('24/11/12','RR/MM/DD'),'4','8','Katarzyna','Sigmoza','5','111222333');
 REM INSERTING into SCHRONISKO.REJESTR_DAROWIZN
 SET DEFINE OFF;
-Insert into SCHRONISKO.REJESTR_DAROWIZN (ID,DARCZYNCA_ID,KWOTA,DATA) values ('31',null,'555',to_date('25/01/09','RR/MM/DD'));
 Insert into SCHRONISKO.REJESTR_DAROWIZN (ID,DARCZYNCA_ID,KWOTA,DATA) values ('56','73','9999',to_date('24/12/30','RR/MM/DD'));
+Insert into SCHRONISKO.REJESTR_DAROWIZN (ID,DARCZYNCA_ID,KWOTA,DATA) values ('32','66','1000',to_date('25/01/08','RR/MM/DD'));
+Insert into SCHRONISKO.REJESTR_DAROWIZN (ID,DARCZYNCA_ID,KWOTA,DATA) values ('33','71','67',to_date('25/01/06','RR/MM/DD'));
+Insert into SCHRONISKO.REJESTR_DAROWIZN (ID,DARCZYNCA_ID,KWOTA,DATA) values ('34','69','10',to_date('25/01/10','RR/MM/DD'));
 REM INSERTING into SCHRONISKO.ZWIERZETA
 SET DEFINE OFF;
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('34','Brutus','Mieszaniec','Male','Dostepny','7',to_date('24/12/31','RR/MM/DD'),'11','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('1','Ares','Mieszaniec','Male','Dostepny','1',to_date('24/11/21','RR/MM/DD'),'3','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('2','Rex','Owczarek niemiecki','Male','Dostepny','2',to_date('24/10/15','RR/MM/DD'),'5','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('1','Ares','Mieszaniec','Male','Dostepny','1',to_date('24/07/21','RR/MM/DD'),'3','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('2','Rex','Owczarek niemiecki','Male','Dostępny','2',to_date('24/10/15','RR/MM/DD'),'5','Pies');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('3','Azor','Mieszaniec','Male','Dostepny','3',to_date('24/07/01','RR/MM/DD'),'4','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('4','Luna','Labrador','Female','Adoptowany','4',to_date('24/09/05','RR/MM/DD'),'2','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('4','Luna','Labrador','Female','Dostepny','4',to_date('24/09/05','RR/MM/DD'),'2','Pies');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('5','Max','Mieszaniec','Male','Dostepny','5',to_date('22/09/16','RR/MM/DD'),'1','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('6','Bella','Mieszaniec','Female','Dostepny','6',to_date('24/10/29','RR/MM/DD'),'6','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('6','Bella','Mieszaniec','Female','Adoptowany','6',to_date('24/10/29','RR/MM/DD'),'6','Pies');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('7','Charlie','Beagle','Male','Dostepny','7',to_date('24/08/10','RR/MM/DD'),'3','Pies');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('8','Rocky','Mieszaniec','Male','Dostepny','8',to_date('24/02/20','RR/MM/DD'),'4','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('9','Daisy','Collie','Female','Dostepny','9',to_date('24/06/10','RR/MM/DD'),'2','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('9','Daisy','Collie','Female','Adoptowany','9',to_date('24/06/10','RR/MM/DD'),'2','Pies');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('10','Shadow','Mieszaniec','Male','Dostepny','10',to_date('24/10/02','RR/MM/DD'),'7','Pies');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('11','Mimi','Mieszaniec','Female','Dostepny','11',to_date('24/10/01','RR/MM/DD'),'2','Kot');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('12','Tina','Mieszaniec','Female','Dostepny','12',to_date('24/09/15','RR/MM/DD'),'3','Kot');
-Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('13','Tommy','Mieszaniec','Male','Dostepny','13',to_date('24/07/20','RR/MM/DD'),'4','Kot');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('11','Mimi','Mieszańec','Female','Dostepny','11',to_date('24/10/01','RR/MM/DD'),'2','Kot');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('12','Tina','Mieszańec','Female','Dostepny','12',to_date('24/09/15','RR/MM/DD'),'3','Kot');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('13','Tommy','Mieszańec','Male','Dostepny','13',to_date('24/07/20','RR/MM/DD'),'4','Kot');
 Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('14','Lizak','Mieszaniec','Male','Dostepny','9',to_date('24/11/06','RR/MM/DD'),'13','Pies');
+Insert into SCHRONISKO.ZWIERZETA (ID,IMIE,RASA,PLEC,STATUS,KOJEC_ID,DATA_PRZYJECIA,WIEK,TYP) values ('34','Brutus','Mieszaniec','Male','Dostepny','7',to_date('24/12/31','RR/MM/DD'),'11','Pies');
 --------------------------------------------------------
 --  DDL for Index SYS_C008274
 --------------------------------------------------------
@@ -563,6 +571,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DODAJ_ADRES
@@ -598,6 +607,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DODAJ_DARCZYNCE
@@ -622,6 +632,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RAISE_APPLICATION_ERROR(-20001, 'Błąd w procedurze DODAJ_DARCZYNCE: ' || SQLERRM);
 END DODAJ_DARCZYNCE;
+
 
 
 /
@@ -650,6 +661,7 @@ EXCEPTION
 END;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DODAJ_KOJEC
@@ -664,6 +676,7 @@ BEGIN
     INSERT INTO KOJCE (KOJEC_ID, NUMER, WIELKOSC)
     VALUES (KOJCE_SEQ.NEXTVAL, p_NUMER, p_WIELKOSC);
 END;
+
 
 /
 --------------------------------------------------------
@@ -684,6 +697,7 @@ BEGIN
     VALUES (Pracownicy_seq.NEXTVAL, p_imie, p_nazwisko, p_pensja, p_stanowisko, p_adres_id, p_data_zatrudnienia);
     COMMIT;
 END;
+
 
 
 
@@ -715,6 +729,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure EDYTUJ_ADRES
@@ -739,6 +754,7 @@ BEGIN
     WHERE ID_ADRESU = p_id_adresu;
     COMMIT;
 END;
+
 
 
 
@@ -767,6 +783,7 @@ BEGIN
 
     COMMIT;
 END EDYTUJ_DARCZYNCE;
+
 
 
 /
@@ -802,6 +819,7 @@ EXCEPTION
 END;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure EDYTUJ_KOJEC
@@ -821,6 +839,7 @@ BEGIN
     WHERE KOJEC_ID = p_id; -- Identyfikacja kojca po jego ID
     COMMIT; -- Zatwierdzenie zmian
 END;
+
 
 /
 --------------------------------------------------------
@@ -848,6 +867,7 @@ BEGIN
     WHERE ID = p_id;
     COMMIT;
 END;
+
 
 
 
@@ -884,6 +904,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure USUN_ADOPCJE
@@ -903,6 +924,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure USUN_ADRES
@@ -916,6 +938,7 @@ BEGIN
     DELETE FROM Adresy WHERE ID_ADRESU = p_id;
     COMMIT;
 END;
+
 
 
 
@@ -934,6 +957,7 @@ BEGIN
 
     COMMIT;
 END USUN_DARCZYNCE;
+
 
 
 /
@@ -963,6 +987,7 @@ EXCEPTION
 END;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure USUN_KOJEC
@@ -978,6 +1003,7 @@ BEGIN
     COMMIT;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure USUN_PRACOWNIKA
@@ -991,6 +1017,7 @@ BEGIN
     DELETE FROM Pracownicy WHERE ID = p_id;
     COMMIT;
 END;
+
 
 
 
@@ -1010,6 +1037,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Package PAKIET_ADOPCJE
@@ -1023,6 +1051,7 @@ function GET_ADOPTION_DETAILS return SYS_REFCURSOR;
 function GET_AVAILABLE_ANIMALS return SYS_REFCURSOR;
 function GET_KOORDYNATORZY_ADOPCJI return SYS_REFCURSOR;
 end;
+
 
 
 /
@@ -1039,6 +1068,7 @@ function GET_ADDRESSES return SYS_REFCURSOR;
 end;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Package PAKIET_DARCZYNCY
@@ -1053,6 +1083,7 @@ function GET_DARCZYNCY return SYS_REFCURSOR;
 end;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Package PAKIET_DAROWIZNY
@@ -1063,7 +1094,22 @@ end;
     PROCEDURE DODAJ_DAROWIZNE;
     PROCEDURE EDYTUJ_DAROWIZNE;
     PROCEDURE USUN_DAROWIZNE;
+    FUNCTION GET_SUM_DONATIONS RETURN SYS_REFCURSOR;
+    FUNCTION GET_AVG_DONATION RETURN SYS_REFCURSOR;
 END;
+
+/
+--------------------------------------------------------
+--  DDL for Package PAKIET_KOJCE
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE PACKAGE "SCHRONISKO"."PAKIET_KOJCE" 
+is
+procedure DODAJ_KOJEC;
+procedure EDYTUJ_KOJEC;
+procedure USUN_KOJEC;
+function POBIERZZWIERZETAPRACOWNICY return SYS_REFCURSOR;
+end;
 
 /
 --------------------------------------------------------
@@ -1078,7 +1124,10 @@ procedure USUN_PRACOWNIKA;
 function GET_ADRESY return SYS_REFCURSOR;
 function GET_PRACOWNICY_WITH_ADRESS return SYS_REFCURSOR;
 function GET_FORMATTED_ADDRESSES return SYS_REFCURSOR;
+function GET_SUM_SALARIES return SYS_REFCURSOR;
+function GET_AVG_SALARY return SYS_REFCURSOR;
 end;
+
 
 
 /
@@ -1092,7 +1141,10 @@ function GET_OPIEKUN return SYS_REFCURSOR;
 function GET_SPRZATACZE return SYS_REFCURSOR;
 function GET_WETERYNARZ return SYS_REFCURSOR;
 function GET_KOORDYNATORZY_ADOPCJI return SYS_REFCURSOR;
+function GET_ADOPTION_COORDINATORS_STATS return SYS_REFCURSOR;
+
 end;
+
 
 /
 --------------------------------------------------------
@@ -1107,6 +1159,7 @@ procedure USUN_ZWIERZE;
 function GET_KOJCE return SYS_REFCURSOR;
 function GET_ANIMALS_AND_CAGES return SYS_REFCURSOR;
 end;
+
 
 
 /
@@ -1133,6 +1186,39 @@ BEGIN
 END;
 
 
+
+
+/
+--------------------------------------------------------
+--  DDL for Function GET_ADOPTION_COORDINATORS_STATS
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "SCHRONISKO"."GET_ADOPTION_COORDINATORS_STATS" 
+RETURN SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN result_cursor FOR
+    SELECT 
+        imie, 
+        nazwisko, 
+        COUNT(nazwisko) AS Liczba_zwierzat
+    FROM (
+        SELECT 
+            p.id, 
+            p.imie,  
+            p.nazwisko, 
+            p.stanowisko,  
+            pw.ZWIERZE_ID
+        FROM pracownicy p
+        INNER JOIN pracownik_zwierzeta pw 
+            ON p.id = pw.pracownik_id
+        WHERE p.stanowisko = 'Koordynator Adopcji'
+    )
+    GROUP BY imie, nazwisko;
+
+    RETURN result_cursor;
+END;
 
 /
 --------------------------------------------------------
@@ -1163,6 +1249,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ADRESY
@@ -1179,6 +1266,7 @@ BEGIN
 
     RETURN adresy_cursor;
 END;
+
 
 
 
@@ -1199,6 +1287,7 @@ BEGIN
 
     RETURN animal_cursor;
 END;
+
 
 
 /
@@ -1222,6 +1311,41 @@ END;
 
 
 
+
+/
+--------------------------------------------------------
+--  DDL for Function GET_AVG_DONATION
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "SCHRONISKO"."GET_AVG_DONATION" 
+return SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN result_cursor FOR
+    SELECT avg(kwota)
+    FROM rejestr_darowizn;
+
+    RETURN result_cursor;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Function GET_AVG_SALARY
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "SCHRONISKO"."GET_AVG_SALARY" 
+return SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN result_cursor FOR
+    SELECT avg(pensja)
+    FROM PRACOWNICY;
+
+    RETURN result_cursor;
+END;
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_DARCZYNCY
@@ -1243,6 +1367,7 @@ BEGIN
 
     RETURN darczyncy_cursor;
 END;
+
 
 
 /
@@ -1268,6 +1393,7 @@ BEGIN
     RETURN darowizny_cursor;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_FORMATTED_ADDRESSES
@@ -1290,6 +1416,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_KOJCE
@@ -1306,6 +1433,7 @@ BEGIN
 
     RETURN kojec_cursor;
 END;
+
 
 /
 --------------------------------------------------------
@@ -1327,6 +1455,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_OPIEKUN
@@ -1344,6 +1473,7 @@ BEGIN
 
     RETURN result_cursor;
 END;
+
 
 
 /
@@ -1373,6 +1503,7 @@ END;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_SPRZATACZE
@@ -1392,6 +1523,41 @@ BEGIN
 END;
 
 
+
+/
+--------------------------------------------------------
+--  DDL for Function GET_SUM_DONATIONS
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "SCHRONISKO"."GET_SUM_DONATIONS" 
+return SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN result_cursor FOR
+    SELECT sum(kwota)
+    FROM rejestr_darowizn;
+
+    RETURN result_cursor;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Function GET_SUM_SALARIES
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "SCHRONISKO"."GET_SUM_SALARIES" 
+return SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN result_cursor FOR
+    SELECT sum(pensja)
+    FROM PRACOWNICY;
+
+    RETURN result_cursor;
+END;
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_WETERYNARZ
@@ -1409,6 +1575,7 @@ BEGIN
 
     RETURN result_cursor;
 END;
+
 
 
 /
@@ -1442,6 +1609,7 @@ BEGIN
 
     RETURN wynik;
 END;
+
 
 /
 --------------------------------------------------------
