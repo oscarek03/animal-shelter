@@ -93,7 +93,7 @@
                <h6>Stanowisko:</h6>
                <select id="editStanowisko" class="form-control mb-2">
                   <option value="" disabled selected>Wybierz stanowisko</option>
-                  <option value="Koordynator adopcji">Koordynator Adopcji</option>
+                  <option value="Koordynator Adopcji">Koordynator Adopcji</option>
                   <option value="Sprzatacz">Sprzatacz</option>
                   <option value="Opiekun Zwierzat">Opiekun Zwierzat</option>
                   <option value="Weteryniarz">Weteryniarz</option>
