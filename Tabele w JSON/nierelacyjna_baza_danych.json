@@ -1,0 +1,762 @@
+{
+    "ZWIERZETA": [
+        {
+            "ID": 34,
+            "IMIE": "Brutus",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 7,
+            "DATA_PRZYJECIA": "2024-12-31",
+            "WIEK": 11,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 1,
+            "IMIE": "Ares",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 1,
+            "DATA_PRZYJECIA": "2024-11-21",
+            "WIEK": 3,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 2,
+            "IMIE": "Rex",
+            "RASA": "Owczarek niemiecki",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 2,
+            "DATA_PRZYJECIA": "2024-10-15",
+            "WIEK": 5,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 3,
+            "IMIE": "Azor",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 3,
+            "DATA_PRZYJECIA": "2024-07-01",
+            "WIEK": 4,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 4,
+            "IMIE": "Luna",
+            "RASA": "Labrador",
+            "PLEC": "Female",
+            "STATUS": "Adoptowany",
+            "KOJEC_ID": 4,
+            "DATA_PRZYJECIA": "2024-09-05",
+            "WIEK": 2,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 5,
+            "IMIE": "Max",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 5,
+            "DATA_PRZYJECIA": "2022-09-16",
+            "WIEK": 1,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 6,
+            "IMIE": "Bella",
+            "RASA": "Mieszaniec",
+            "PLEC": "Female",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 6,
+            "DATA_PRZYJECIA": "2024-10-29",
+            "WIEK": 6,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 7,
+            "IMIE": "Charlie",
+            "RASA": "Beagle",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 7,
+            "DATA_PRZYJECIA": "2024-08-10",
+            "WIEK": 3,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 8,
+            "IMIE": "Rocky",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 8,
+            "DATA_PRZYJECIA": "2024-02-20",
+            "WIEK": 4,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 9,
+            "IMIE": "Daisy",
+            "RASA": "Collie",
+            "PLEC": "Female",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 9,
+            "DATA_PRZYJECIA": "2024-06-10",
+            "WIEK": 2,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 10,
+            "IMIE": "Shadow",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 10,
+            "DATA_PRZYJECIA": "2024-10-02",
+            "WIEK": 7,
+            "TYP": "Pies"
+        },
+        {
+            "ID": 11,
+            "IMIE": "Mimi",
+            "RASA": "Mieszaniec",
+            "PLEC": "Female",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 11,
+            "DATA_PRZYJECIA": "2024-10-01",
+            "WIEK": 2,
+            "TYP": "Kot"
+        },
+        {
+            "ID": 12,
+            "IMIE": "Tina",
+            "RASA": "Mieszaniec",
+            "PLEC": "Female",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 12,
+            "DATA_PRZYJECIA": "2024-09-15",
+            "WIEK": 3,
+            "TYP": "Kot"
+        },
+        {
+            "ID": 13,
+            "IMIE": "Tommy",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 13,
+            "DATA_PRZYJECIA": "2024-07-20",
+            "WIEK": 4,
+            "TYP": "Kot"
+        },
+        {
+            "ID": 14,
+            "IMIE": "Lizak",
+            "RASA": "Mieszaniec",
+            "PLEC": "Male",
+            "STATUS": "Dostepny",
+            "KOJEC_ID": 9,
+            "DATA_PRZYJECIA": "2024-11-06",
+            "WIEK": 13,
+            "TYP": "Pies"
+        }
+    ],
+    "ADRESY": [
+        {
+            "ID_ADRESU": 1,
+            "MIASTO": "Warszawa",
+            "KOD_POCZTOWY": "00-001",
+            "ULICA": "Marsza³kowska",
+            "NUMER_DOMU": 12,
+            "NUMER_MIESZKANIA": 1
+        },
+        {
+            "ID_ADRESU": 2,
+            "MIASTO": "Kraków",
+            "KOD_POCZTOWY": "30-001",
+            "ULICA": "Floriañska",
+            "NUMER_DOMU": 25,
+            "NUMER_MIESZKANIA": 2
+        },
+        {
+            "ID_ADRESU": 3,
+            "MIASTO": "Poznañ",
+            "KOD_POCZTOWY": "60-001",
+            "ULICA": "Wielka",
+            "NUMER_DOMU": 15,
+            "NUMER_MIESZKANIA": 3
+        },
+        {
+            "ID_ADRESU": 4,
+            "MIASTO": "Wroc³aw",
+            "KOD_POCZTOWY": "50-001",
+            "ULICA": "widnicka",
+            "NUMER_DOMU": 8,
+            "NUMER_MIESZKANIA": 4
+        },
+        {
+            "ID_ADRESU": 5,
+            "MIASTO": "Gdañsk",
+            "KOD_POCZTOWY": "80-001",
+            "ULICA": "D³uga",
+            "NUMER_DOMU": 19,
+            "NUMER_MIESZKANIA": 5
+        },
+        {
+            "ID_ADRESU": 6,
+            "MIASTO": "Szczecin",
+            "KOD_POCZTOWY": "70-001",
+            "ULICA": "Pilsudskiego",
+            "NUMER_DOMU": 3,
+            "NUMER_MIESZKANIA": 6
+        },
+        {
+            "ID_ADRESU": 8,
+            "MIASTO": "£ód",
+            "KOD_POCZTOWY": "90-001",
+            "ULICA": "Piotrkowska",
+            "NUMER_DOMU": 11,
+            "NUMER_MIESZKANIA": 8
+        }
+    ],
+    "DARCZYNCY": [
+        {
+            "ID": 80,
+            "NAZWA_UZYTKOWNIKA": "oskar_boruwa",
+            "IMIE": "Oskar",
+            "NAZWISKO": "Borówka",
+            "MAIL": "o.boruwa@example.com"
+        },
+        {
+            "ID": 64,
+            "NAZWA_UZYTKOWNIKA": "jan_kowalski",
+            "IMIE": "Jan",
+            "NAZWISKO": "Kowalski",
+            "MAIL": "jan.kowalski@example.com"
+        },
+        {
+            "ID": 65,
+            "NAZWA_UZYTKOWNIKA": "anna_nowak",
+            "IMIE": "Anna",
+            "NAZWISKO": "Nowak",
+            "MAIL": "anna.nowak@example.com"
+        },
+        {
+            "ID": 69,
+            "NAZWA_UZYTKOWNIKA": "ewa_kaczmarek",
+            "IMIE": "Ewa",
+            "NAZWISKO": "Kaczmarek",
+            "MAIL": "ewa.kaczmarek@example.com"
+        },
+        {
+            "ID": 66,
+            "NAZWA_UZYTKOWNIKA": "piotr_wisniewski",
+            "IMIE": "Piotr",
+            "NAZWISKO": "Wisniewski",
+            "MAIL": "piotr.wisniewski@example.com"
+        },
+        {
+            "ID": 67,
+            "NAZWA_UZYTKOWNIKA": "katarzyna_kaminska",
+            "IMIE": "Katarzyna",
+            "NAZWISKO": "Kaminska",
+            "MAIL": "katarzyna.kaminska@example.com"
+        },
+        {
+            "ID": 68,
+            "NAZWA_UZYTKOWNIKA": "michal_wojcik",
+            "IMIE": "Michal",
+            "NAZWISKO": "Wojcik",
+            "MAIL": "michal.wojcik@example.com"
+        },
+        {
+            "ID": 70,
+            "NAZWA_UZYTKOWNIKA": "tomasz_lewandowski",
+            "IMIE": "Tomasz",
+            "NAZWISKO": "Lewandowski",
+            "MAIL": "tomasz.lewandowski@example.com"
+        },
+        {
+            "ID": 71,
+            "NAZWA_UZYTKOWNIKA": "joanna_zielinska",
+            "IMIE": "Joanna",
+            "NAZWISKO": "Zielinska",
+            "MAIL": "joanna.zielinska@example.com"
+        },
+        {
+            "ID": 72,
+            "NAZWA_UZYTKOWNIKA": "robert_szymanski",
+            "IMIE": "Robert",
+            "NAZWISKO": "Szymanski",
+            "MAIL": "robert.szymanski@example.com"
+        },
+        {
+            "ID": 73,
+            "NAZWA_UZYTKOWNIKA": "maria_wozniak",
+            "IMIE": "Maria",
+            "NAZWISKO": "Wozniak",
+            "MAIL": "maria.wozniak@example.com"
+        }
+    ],
+    "KOJCE": [
+        {
+            "KOJEC_ID": 1,
+            "WIELKOSC": "Male",
+            "NUMER": "K01DOG"
+        },
+        {
+            "KOJEC_ID": 2,
+            "WIELKOSC": "Sredni",
+            "NUMER": "K02DOG"
+        },
+        {
+            "KOJEC_ID": 3,
+            "WIELKOSC": "Duzy",
+            "NUMER": "K03DOG"
+        },
+        {
+            "KOJEC_ID": 4,
+            "WIELKOSC": "Maly",
+            "NUMER": "K04DOG"
+        },
+        {
+            "KOJEC_ID": 5,
+            "WIELKOSC": "Sredni",
+            "NUMER": "K05DOG"
+        },
+        {
+            "KOJEC_ID": 6,
+            "WIELKOSC": "Duzy",
+            "NUMER": "K06DOG"
+        },
+        {
+            "KOJEC_ID": 7,
+            "WIELKOSC": "Maly",
+            "NUMER": "K07DOG"
+        },
+        {
+            "KOJEC_ID": 8,
+            "WIELKOSC": "Sredni",
+            "NUMER": "K08DOG"
+        },
+        {
+            "KOJEC_ID": 9,
+            "WIELKOSC": "Duzy",
+            "NUMER": "K09DOG"
+        },
+        {
+            "KOJEC_ID": 10,
+            "WIELKOSC": "Sredni",
+            "NUMER": "K10DOG"
+        },
+        {
+            "KOJEC_ID": 11,
+            "WIELKOSC": "Maly",
+            "NUMER": "K11CAT"
+        },
+        {
+            "KOJEC_ID": 12,
+            "WIELKOSC": "Sredni",
+            "NUMER": "K12CAT"
+        },
+        {
+            "KOJEC_ID": 13,
+            "WIELKOSC": "Duzy",
+            "NUMER": "K13CAT"
+        }
+    ],
+    "PRACOWNICY": [
+        {
+            "ID": 31,
+            "IMIE": "Michal",
+            "NAZWISKO": "Wata",
+            "PENSJA": 5500,
+            "STANOWISKO": "Koordynator Adopcji",
+            "ADRES_ID": 3,
+            "DATA_ZATRUDNIENIA": "2024-12-02"
+        },
+        {
+            "ID": 1,
+            "IMIE": "Anna",
+            "NAZWISKO": "Kowalska",
+            "PENSJA": 4500,
+            "STANOWISKO": "Weterynarz",
+            "ADRES_ID": 1,
+            "DATA_ZATRUDNIENIA": "2023-05-10"
+        },
+        {
+            "ID": 2,
+            "IMIE": "Piotr",
+            "NAZWISKO": "Nowak",
+            "PENSJA": 5000,
+            "STANOWISKO": "Weterynarz",
+            "ADRES_ID": 2,
+            "DATA_ZATRUDNIENIA": "2022-11-23"
+        },
+        {
+            "ID": 3,
+            "IMIE": "Ewa",
+            "NAZWISKO": "Zieliñska",
+            "PENSJA": 2500,
+            "STANOWISKO": "Sprzatacz",
+            "ADRES_ID": 3,
+            "DATA_ZATRUDNIENIA": "2024-01-01"
+        },
+        {
+            "ID": 4,
+            "IMIE": "Krzysztof",
+            "NAZWISKO": "Wójcik",
+            "PENSJA": 2600,
+            "STANOWISKO": "Sprzatacz",
+            "ADRES_ID": 4,
+            "DATA_ZATRUDNIENIA": "2023-09-10"
+        },
+        {
+            "ID": 5,
+            "IMIE": "Monika",
+            "NAZWISKO": "Lewandowska",
+            "PENSJA": 3000,
+            "STANOWISKO": "Opiekun Zwierzat",
+            "ADRES_ID": 5,
+            "DATA_ZATRUDNIENIA": "2024-02-15"
+        },
+        {
+            "ID": 6,
+            "IMIE": "Tomasz",
+            "NAZWISKO": "Szymañski",
+            "PENSJA": 3200,
+            "STANOWISKO": "Opiekun Zwierzat",
+            "ADRES_ID": 6,
+            "DATA_ZATRUDNIENIA": "2023-06-12"
+        },
+        {
+            "ID": 7,
+            "IMIE": "Kacper",
+            "NAZWISKO": "Szaleniec",
+            "PENSJA": 5900,
+            "STANOWISKO": "Koordynator Adopcji",
+            "ADRES_ID": 3,
+            "DATA_ZATRUDNIENIA": "2024-12-02"
+        },
+        {
+            "ID": 8,
+            "IMIE": "Marek",
+            "NAZWISKO": "Jankowski",
+            "PENSJA": 6000,
+            "STANOWISKO": "Koordynator Adopcji",
+            "ADRES_ID": 8,
+            "DATA_ZATRUDNIENIA": "2022-08-05"
+        }
+    ],
+    "PRACOWNIK_ZWIERZETA": [
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 3
+        },
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 5
+        },
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 7
+        },
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 9
+        },
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 11
+        },
+        {
+            "PRACOWNIK_ID": 1,
+            "ZWIERZE_ID": 13
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 1
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 2
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 4
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 6
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 8
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 10
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 12
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 14
+        },
+        {
+            "PRACOWNIK_ID": 2,
+            "ZWIERZE_ID": 34
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 1
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 3
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 5
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 7
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 9
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 11
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 13
+        },
+        {
+            "PRACOWNIK_ID": 3,
+            "ZWIERZE_ID": 34
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 2
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 4
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 6
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 8
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 10
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 12
+        },
+        {
+            "PRACOWNIK_ID": 4,
+            "ZWIERZE_ID": 14
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 1
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 3
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 5
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 7
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 9
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 11
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 13
+        },
+        {
+            "PRACOWNIK_ID": 5,
+            "ZWIERZE_ID": 34
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 2
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 4
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 6
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 8
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 10
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 12
+        },
+        {
+            "PRACOWNIK_ID": 6,
+            "ZWIERZE_ID": 14
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 3
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 5
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 7
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 9
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 11
+        },
+        {
+            "PRACOWNIK_ID": 7,
+            "ZWIERZE_ID": 13
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 2
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 4
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 6
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 8
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 10
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 12
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 14
+        },
+        {
+            "PRACOWNIK_ID": 8,
+            "ZWIERZE_ID": 34
+        },
+        {
+            "PRACOWNIK_ID": 31,
+            "ZWIERZE_ID": 1
+        }
+    ],
+    "REJESTR_ADOPCJI": [
+        {
+            "ID_ADOPCJI": 17,
+            "DATA_ADOPCJI": "2024-11-12",
+            "ZWIERZE_ID": 4,
+            "PRACOWNIK_ID": 8,
+            "IMIE": "Katarzyna",
+            "NAZWISKO": "Sigmoza",
+            "ADRES_ID": 5,
+            "NUMER_TELEFONU": 111222333
+        },
+        {
+            "ID_ADOPCJI": 19,
+            "DATA_ADOPCJI": "2025-01-07",
+            "ZWIERZE_ID": 6,
+            "PRACOWNIK_ID": 8,
+            "IMIE": "Zbigniew",
+            "NAZWISKO": "Jankowski",
+            "ADRES_ID": 3,
+            "NUMER_TELEFONU": 33344455
+        },
+        {
+            "ID_ADOPCJI": 20,
+            "DATA_ADOPCJI": "2025-01-07",
+            "ZWIERZE_ID": 9,
+            "PRACOWNIK_ID": 8,
+            "IMIE": "asdasd",
+            "NAZWISKO": "asdasdas",
+            "ADRES_ID": 4,
+            "NUMER_TELEFONU": 33344455
+        }
+    ],
+    "REJESTR_DAROWIZN": [
+        {
+            "ID": 81,
+            "DARCZYNCA_ID": 80.0,
+            "KWOTA": 10000,
+            "DATA": "2025-01-16"
+        },
+        {
+            "ID": 32,
+            "DARCZYNCA_ID": 66.0,
+            "KWOTA": 1000,
+            "DATA": "2025-01-08"
+        },
+        {
+            "ID": 33,
+            "DARCZYNCA_ID": 71.0,
+            "KWOTA": 67,
+            "DATA": "2025-01-06"
+        },
+        {
+            "ID": 34,
+            "DARCZYNCA_ID": 69.0,
+            "KWOTA": 10,
+            "DATA": "2025-01-10"
+        },
+        {
+            "ID": 31,
+            "DARCZYNCA_ID": NaN,
+            "KWOTA": 555,
+            "DATA": "2025-01-09"
+        }
+    ]
+}
