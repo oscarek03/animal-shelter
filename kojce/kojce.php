@@ -44,7 +44,7 @@
             <h6>Rozmiar kojca:</h6>
                <select class="form-control mb-2" id="editRozmiar">
                   <option value="" disabled selected>Wybierz rozmiar:</option>
-                  <option value="Male">Maly</option>
+                  <option value="Maly">Maly</option>
                   <option value="Sredni">Sredni</option>
                   <option value="Duzy">Duzy</option>
                </select>
