@@ -1,8 +1,8 @@
 <?php
-    require_once '../db_connection.php';
+    require_once "../db_connection.php";
 
     // Pobieramy ID pracownika do usunięcia
-    $pracownik_id = $_POST['id'];
+    $pracownik_id = $_POST["id"];
 
     // Przygotowujemy wywołanie procedury
     $sql = "BEGIN usun_pracownika(:id); END;";
@@ -15,10 +15,10 @@
     $result = oci_execute($stid);
 
     if ($result) {
-        echo json_encode(['success' => true]);
+        echo json_encode(["success" => true]);
     } else {
         $e = oci_error($stid);
-        echo json_encode(['success' => false, 'message' => $e['message']]);
+        echo json_encode(["success" => false, "message" => $e["message"]]);
     }
 
     oci_free_statement($stid);

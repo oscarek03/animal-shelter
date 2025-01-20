@@ -17,117 +17,146 @@
 <body>
     <div class="container" style="margin-top: 100px;">
         <?php
-        // Połączenie z bazą danych i wywołanie funkcji PL/SQL
-        require_once '../db_connection.php';
+            require_once "../db_connection.php";
 
-        try {
-            // Wywołanie funkcji PL/SQL, która zwraca dane o zwierzętach i przypisanych pracownikach
-            $sql = 'BEGIN :cursor := PobierzZwierzetaPracownicy(); END;';
-            $stid = oci_parse($conn, $sql);
+            try {
+                // Wywołanie funkcji PL/SQL, która zwraca dane o zwierzętach i przypisanych pracownikach
+                $sql = "BEGIN :cursor := PobierzZwierzetaPracownicy(); END;";
+                $stid = oci_parse($conn, $sql);
 
-            // Tworzymy kursor do pobrania danych
-            $cursor = oci_new_cursor($conn);
+                // Tworzymy kursor do pobrania danych
+                $cursor = oci_new_cursor($conn);
 
-            // Przypisujemy kursor do zmiennej wyjściowej
-            oci_bind_by_name($stid, ':cursor', $cursor, -1, OCI_B_CURSOR);
+                // Przypisujemy kursor do zmiennej wyjściowej
+                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-            // Wykonujemy zapytanie PL/SQL oraz uruchamiamy kursor
-            oci_execute($stid);
-            oci_execute($cursor);
+                // Wykonujemy zapytanie PL/SQL oraz uruchamiamy kursor
+                oci_execute($stid);
+                oci_execute($cursor);
 
-            // Tworzymy tablicę na wyniki z kursora
-            $zwierzeta = [];
+                // Tworzymy tablicę na wyniki z kursora
+                $zwierzeta = [];
 
-            // Iterujemy wyniki i przypisujemy dane do tablicy
-            while (($row = oci_fetch_assoc($cursor)) != false) {
-                $zwierzeId = $row['ZWIERZE_ID'];
+                // Iterujemy wyniki i przypisujemy dane do tablicy
+                while (($row = oci_fetch_assoc($cursor)) != false) {
+                    $zwierzeId = $row["ZWIERZE_ID"];
 
-                // Sprawdzamy, czy zwierzę o danym ID już istnieje w tablicy
-                if (!isset($zwierzeta[$zwierzeId])) {
-                    $zwierzeta[$zwierzeId] = [
-                        'IMIE' => $row['ZWIERZE_IMIE'],
-                        'RASA' => $row['ZWIERZE_RASA'],
-                        'TYP' => $row['ZWIERZE_TYP'],
-                        'WETERYNARZ' => '',
-                        'SPRZATACZ' => '',
-                        'KOORDYNATOR_ADOPCJI' => '',
-                        'OPIEKUN' => ''
-                    ];
-                }
+                    // Sprawdzamy, czy zwierzę o danym ID już istnieje w tablicy
+                    if (!isset($zwierzeta[$zwierzeId])) {
+                        $zwierzeta[$zwierzeId] = [
+                            "IMIE" => $row["ZWIERZE_IMIE"],
+                            "RASA" => $row["ZWIERZE_RASA"],
+                            "TYP" => $row["ZWIERZE_TYP"],
+                            "WETERYNARZ" => "",
+                            "SPRZATACZ" => "",
+                            "KOORDYNATOR_ADOPCJI" => "",
+                            "OPIEKUN" => "",
+                        ];
+                    }
 
-                // Przypisujemy odpowiednich pracowników do zwierząt na podstawie stanowiska
-                if (!empty($row['PRACOWNIK_STANOWISKO'])) {
-                    $stanowisko = $row['PRACOWNIK_STANOWISKO'];
-                    $pracownik = $row['PRACOWNIK_IMIE'] . ' ' . $row['PRACOWNIK_NAZWISKO'];
+                    // Przypisujemy odpowiednich pracowników do zwierząt na podstawie stanowiska
+                    if (!empty($row["PRACOWNIK_STANOWISKO"])) {
+                        $stanowisko = $row["PRACOWNIK_STANOWISKO"];
+                        $pracownik =
+                            $row["PRACOWNIK_IMIE"] .
+                            " " .
+                            $row["PRACOWNIK_NAZWISKO"];
 
-                    switch ($stanowisko) {
-                        case 'Weterynarz':
-                            $zwierzeta[$zwierzeId]['WETERYNARZ'] = $pracownik;
-                            break;
-                        case 'Sprzatacz':
-                            $zwierzeta[$zwierzeId]['SPRZATACZ'] = $pracownik;
-                            break;
-                        case 'Koordynator Adopcji':
-                            $zwierzeta[$zwierzeId]['KOORDYNATOR_ADOPCJI'] = $pracownik;
-                            break;
-                        case 'Opiekun Zwierzat':
-                            $zwierzeta[$zwierzeId]['OPIEKUN'] = $pracownik;
-                            break;
+                        switch ($stanowisko) {
+                            case "Weterynarz":
+                                $zwierzeta[$zwierzeId]["WETERYNARZ"] = $pracownik;
+                                break;
+                            case "Sprzatacz":
+                                $zwierzeta[$zwierzeId]["SPRZATACZ"] = $pracownik;
+                                break;
+                            case "Koordynator Adopcji":
+                                $zwierzeta[$zwierzeId][
+                                    "KOORDYNATOR_ADOPCJI"
+                                ] = $pracownik;
+                                break;
+                            case "Opiekun Zwierzat":
+                                $zwierzeta[$zwierzeId]["OPIEKUN"] = $pracownik;
+                                break;
+                        }
                     }
                 }
+
+                // Generowanie tabeli HTML z danymi zwierząt i pracowników
+                echo '<table id="workersTable" class="table table-bordered">';
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th>Id zwierzecia</th>";
+                echo "<th>Imię</th>";
+                echo "<th>Rasa</th>";
+                echo "<th>Typ</th>";
+                echo "<th>Weterynarz</th>";
+                echo "<th>Sprzatacz</th>";
+                echo "<th>Koordynator adopcji</th>";
+                echo "<th>Opiekun zwierzecia</th>";
+                echo "<th>Akcja</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+
+                // Iterowanie po tablicy danych i wyświetlanie wierszy tabeli
+                foreach ($zwierzeta as $id => $dane) {
+                    $animalDataJson = htmlspecialchars(
+                        json_encode([
+                            "id" => $id,
+                            "name" => $dane["IMIE"],
+                            "rasa" => $dane["RASA"],
+                            "typ" => $dane["TYP"],
+                            "animalId" => $id,
+                        ]),
+                        ENT_QUOTES,
+                        "UTF-8"
+                    );
+
+                    echo "<tr>";
+                    echo "<td>" .
+                        htmlspecialchars($id, ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["IMIE"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["RASA"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["TYP"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["WETERYNARZ"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["SPRZATACZ"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars(
+                            $dane["KOORDYNATOR_ADOPCJI"],
+                            ENT_QUOTES,
+                            "UTF-8"
+                        ) .
+                        "</td>";
+                    echo "<td>" .
+                        htmlspecialchars($dane["OPIEKUN"], ENT_QUOTES, "UTF-8") .
+                        "</td>";
+                    echo '<td class="right-align"><button onclick="showEditWorkersAlert(' .
+                        $animalDataJson .
+                        ')" class="btn btn-light"><i class="fa fa-user"></i></button></td>';
+                    echo "</tr>";
+                }
+
+                echo "</tbody>";
+                echo "</table>";
+
+                // Zwalnianie zasobów po zakończeniu pracy z bazą danych
+                oci_free_statement($stid);
+                oci_free_statement($cursor);
+            } catch (Exception $e) {
+                // Obsługa błędów i wyświetlanie komunikatu
+                echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
             }
-
-            // Generowanie tabeli HTML z danymi zwierząt i pracowników
-            echo '<table id="workersTable" class="table table-bordered">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Id zwierzecia</th>';
-            echo '<th>Imię</th>';
-            echo '<th>Rasa</th>';
-            echo '<th>Typ</th>';
-            echo '<th>Weterynarz</th>';
-            echo '<th>Sprzatacz</th>';
-            echo '<th>Koordynator adopcji</th>';
-            echo '<th>Opiekun zwierzecia</th>';
-            echo '<th>Akcja</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-
-            // Iterowanie po tablicy danych i wyświetlanie wierszy tabeli
-            foreach ($zwierzeta as $id => $dane) {
-                $animalDataJson = htmlspecialchars(json_encode([
-                    'id' => $id,
-                    'name' => $dane['IMIE'],
-                    'rasa' => $dane['RASA'],
-                    'typ' => $dane['TYP'],
-                    'animalId' => $id,
-                ]), ENT_QUOTES, 'UTF-8');
-
-                echo '<tr>';
-                echo '<td>' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['IMIE'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['RASA'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['TYP'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['WETERYNARZ'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['SPRZATACZ'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['KOORDYNATOR_ADOPCJI'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td>' . htmlspecialchars($dane['OPIEKUN'], ENT_QUOTES, 'UTF-8') . '</td>';
-                echo '<td class="right-align"><button onclick="showEditWorkersAlert(' . $animalDataJson . ')" class="btn btn-light"><i class="fa fa-user"></i></button></td>';
-                echo '</tr>';
-            }
-
-            echo '</tbody>';
-            echo '</table>';
-
-            // Zwalnianie zasobów po zakończeniu pracy z bazą danych
-            oci_free_statement($stid);
-            oci_free_statement($cursor);
-
-        } catch (Exception $e) {
-            // Obsługa błędów i wyświetlanie komunikatu
-            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-        }
         ?>
 
         <!-- Formularz do edycji pracowników przypisanych do zwierząt -->
@@ -140,18 +169,26 @@
             <select class="form-control mb-2" id="editWeterynarz">
                 <option value="" disabled selected>Wybierz weterynarza</option>
                 <?php
-                // Pobieranie listy weterynarzy z bazy danych
-                $sql = "BEGIN :cursor := get_weterynarz(); END;";
-                $stid = oci_parse($conn, $sql);
-                $cursor = oci_new_cursor($conn);
-                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                oci_execute($stid);
-                oci_execute($cursor);
-                while (($row = oci_fetch_assoc($cursor)) != false) {
-                    echo "<option value=\"" . $row['ID'] . "\">" . $row['ID'] . ") " . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_free_statement($cursor);
+                    // Pobieranie listy weterynarzy z bazy danych
+                    $sql = "BEGIN :cursor := get_weterynarz(); END;";
+                    $stid = oci_parse($conn, $sql);
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+                    oci_execute($stid);
+                    oci_execute($cursor);
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<option value=\"" .
+                            $row["ID"] .
+                            "\">" .
+                            $row["ID"] .
+                            ") " .
+                            $row["IMIE"] .
+                            " " .
+                            $row["NAZWISKO"] .
+                            "</option>";
+                    }
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
                 ?>
             </select>
 
@@ -160,17 +197,25 @@
             <select class="form-control mb-2" id="editSprzatacz">
                 <option value="" disabled selected>Wybierz sprzątacza</option>
                 <?php
-                $sql = "BEGIN :cursor := get_sprzatacze(); END;";
-                $stid = oci_parse($conn, $sql);
-                $cursor = oci_new_cursor($conn);
-                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                oci_execute($stid);
-                oci_execute($cursor);
-                while (($row = oci_fetch_assoc($cursor)) != false) {
-                    echo "<option value=\"" . $row['ID'] . "\">" . $row['ID'] . ") " . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_free_statement($cursor);
+                    $sql = "BEGIN :cursor := get_sprzatacze(); END;";
+                    $stid = oci_parse($conn, $sql);
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+                    oci_execute($stid);
+                    oci_execute($cursor);
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<option value=\"" .
+                            $row["ID"] .
+                            "\">" .
+                            $row["ID"] .
+                            ") " .
+                            $row["IMIE"] .
+                            " " .
+                            $row["NAZWISKO"] .
+                            "</option>";
+                    }
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
                 ?>
             </select>
 
@@ -179,17 +224,25 @@
             <select class="form-control mb-2" id="editKoordynator">
                 <option value="" disabled selected>Wybierz koordynatora</option>
                 <?php
-                $sql = "BEGIN :cursor := get_koordynatorzy_adopcji(); END;";
-                $stid = oci_parse($conn, $sql);
-                $cursor = oci_new_cursor($conn);
-                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                oci_execute($stid);
-                oci_execute($cursor);
-                while (($row = oci_fetch_assoc($cursor)) != false) {
-                    echo "<option value=\"" . $row['ID'] . "\">" . $row['ID'] . ") " . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_free_statement($cursor);
+                    $sql = "BEGIN :cursor := get_koordynatorzy_adopcji(); END;";
+                    $stid = oci_parse($conn, $sql);
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+                    oci_execute($stid);
+                    oci_execute($cursor);
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<option value=\"" .
+                            $row["ID"] .
+                            "\">" .
+                            $row["ID"] .
+                            ") " .
+                            $row["IMIE"] .
+                            " " .
+                            $row["NAZWISKO"] .
+                            "</option>";
+                    }
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
                 ?>
             </select>
 
@@ -197,17 +250,25 @@
             <select class="form-control mb-2" id="editOpiekun">
                 <option value="" disabled selected>Wybierz opiekuna</option>
                 <?php
-                $sql = "BEGIN :cursor := get_opiekun(); END;";
-                $stid = oci_parse($conn, $sql);
-                $cursor = oci_new_cursor($conn);
-                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                oci_execute($stid);
-                oci_execute($cursor);
-                while (($row = oci_fetch_assoc($cursor)) != false) {
-                    echo "<option value=\"" . $row['ID'] . "\">" . $row['ID'] . ") " . $row['IMIE'] . " " . $row['NAZWISKO'] . "</option>";
-                }
-                oci_free_statement($stid);
-                oci_free_statement($cursor);
+                    $sql = "BEGIN :cursor := get_opiekun(); END;";
+                    $stid = oci_parse($conn, $sql);
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+                    oci_execute($stid);
+                    oci_execute($cursor);
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<option value=\"" .
+                            $row["ID"] .
+                            "\">" .
+                            $row["ID"] .
+                            ") " .
+                            $row["IMIE"] .
+                            " " .
+                            $row["NAZWISKO"] .
+                            "</option>";
+                    }
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
                 ?>
             </select>
             

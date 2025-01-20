@@ -63,51 +63,84 @@
             </thead>
             <tbody>
                <?php
-                    require_once '../db_connection.php';
+                    require_once "../db_connection.php";
                     try {
                         // Przygotowanie wywołania funkcji PL/SQL
                         $sql = "BEGIN :cursor := get_kojce(); END;";
                         $stid = oci_parse($conn, $sql);
-                    
+
                         // Deklaracja kursora jako parametr wyjściowy
                         $cursor = oci_new_cursor($conn);
-                        oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                    
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+
                         // Wykonanie funkcji PL/SQL
                         oci_execute($stid);
                         oci_execute($cursor);
-                    
+
                         // Pętla do generowania wierszy tabeli z wyników kursora
                         while (($row = oci_fetch_assoc($cursor)) != false) {
-                            echo "<tr id='" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "'>";
-                            echo "<td>" . htmlspecialchars($row['NUMER'], ENT_QUOTES, 'UTF-8') . "</td>";
-                            echo "<td>" . htmlspecialchars($row['WIELKOSC'], ENT_QUOTES, 'UTF-8') . "</td>";
-                            
+                            echo "<tr id='" .
+                                htmlspecialchars(
+                                    $row["KOJEC_ID"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "'>";
+                            echo "<td>" .
+                                htmlspecialchars(
+                                    $row["NUMER"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars(
+                                    $row["WIELKOSC"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "</td>";
+
                             // Przygotowanie danych dla JavaScript
                             $kojecData = [
-                                "id" => $row['KOJEC_ID'],
-                                "imie" => $row['NUMER'],
-                                "rasa" => $row['WIELKOSC']
+                                "id" => $row["KOJEC_ID"],
+                                "imie" => $row["NUMER"],
+                                "rasa" => $row["WIELKOSC"],
                             ];
-                            $kojecDataJson = htmlspecialchars(json_encode($kojecData), ENT_QUOTES, 'UTF-8');
-                        
+                            $kojecDataJson = htmlspecialchars(
+                                json_encode($kojecData),
+                                ENT_QUOTES,
+                                "UTF-8"
+                            );
+
                             echo "<td>
-                                <button onclick='showeditKojecAlert($kojecDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
-                                <button class='btn btn-light' onclick='deleteKojec(" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . ")'><i class='fa fa-trash'></i></button>
-                            </td>";
-                            
+                                        <button onclick='showeditKojecAlert($kojecDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-light' onclick='deleteKojec(" .
+                                htmlspecialchars(
+                                    $row["KOJEC_ID"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                ")'><i class='fa fa-trash'></i></button>
+                                    </td>";
+
                             echo "</tr>";
                         }
-                    
+
                         // Zwolnienie zasobów i zamknięcie połączenia
                         oci_free_statement($stid);
                         oci_free_statement($cursor);
                         oci_close($conn);
-                    
                     } catch (Exception $e) {
                         echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
                     }
-                  ?>
+               ?>
             </tbody>
          </table>
       </div>

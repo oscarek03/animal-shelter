@@ -25,8 +25,8 @@
             <select id="newDarczyncaId" class="form-control mb-2">
                 <option value="">Wybierz...</option>
                 <?php
-                    require_once '../db_connection.php';
-                    
+                    require_once "../db_connection.php";
+
                     try {
                         // Pobranie listy darczyńców
                         $sql = "SELECT ID, NAZWA_UZYTKOWNIKA FROM DARCZYNCY";
@@ -35,7 +35,11 @@
 
                         // Dodanie opcji do selecta
                         while (($row = oci_fetch_assoc($stid)) != false) {
-                            echo "<option value='" . htmlspecialchars($row['ID']) . "'>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</option>";
+                            echo "<option value='" .
+                                htmlspecialchars($row["ID"]) .
+                                "'>" .
+                                htmlspecialchars($row["NAZWA_UZYTKOWNIKA"]) .
+                                "</option>";
                         }
 
                         oci_free_statement($stid);
@@ -67,22 +71,26 @@
         <h6>Wybierz darczyńcę:</h6>
         <select id="editDarczyncaId" class="form-control mb-2">
             <option value="">Wybierz...</option>
-            <?php
-            try {
-                // Pobranie listy darczyńców
-                $sql = "SELECT ID, NAZWA_UZYTKOWNIKA FROM DARCZYNCY";
-                $stid = oci_parse($conn, $sql);
-                oci_execute($stid);
+            <?php 
+                try {
+                    // Pobranie listy darczyńców
+                    $sql = "SELECT ID, NAZWA_UZYTKOWNIKA FROM DARCZYNCY";
+                    $stid = oci_parse($conn, $sql);
+                    oci_execute($stid);
 
-                // Dodanie opcji do selecta
-                while (($row = oci_fetch_assoc($stid)) != false) {
-                    echo "<option value='" . htmlspecialchars($row['ID']) . "'>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</option>";
-                }
+                    // Dodanie opcji do selecta
+                    while (($row = oci_fetch_assoc($stid)) != false) {
+                        echo "<option value='" .
+                            htmlspecialchars($row["ID"]) .
+                            "'>" .
+                            htmlspecialchars($row["NAZWA_UZYTKOWNIKA"]) .
+                            "</option>";
+                    }
 
-                oci_free_statement($stid);
-            } catch (Exception $e) {
-                echo "<option value=''>Błąd wczytywania danych</option>";
-            }
+                    oci_free_statement($stid);
+                } catch (Exception $e) {
+                    echo "<option value=''>Błąd wczytywania danych</option>";
+                } 
             ?>
         </select>
 
@@ -110,39 +118,53 @@
                </tr>
             </thead>
             <tbody>
-               <?php
-                  try {
-                      $sql = "BEGIN :cursor := GET_DAROWIZNY; END;";
-                      $stid = oci_parse($conn, $sql);
-                      $cursor = oci_new_cursor($conn);
-                      oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                      oci_execute($stid);
-                      oci_execute($cursor);
-                      while (($row = oci_fetch_assoc($cursor)) != false) {
-                          echo "<tr id='" . htmlspecialchars($row['ID']) . "'>";
-                          echo "<td>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['KWOTA']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['DATA']) . "</td>";
-                          $darowiznaData = [
-                              "id" => $row['ID'],
-                              "kwota" => $row['KWOTA'],
-                              "data" => $row['DATA'],
-                              "nazwa_uzytkownika" => $row['NAZWA_UZYTKOWNIKA']
-                          ];
-                          $darowiznaDataJson = htmlspecialchars(json_encode($darowiznaData), ENT_QUOTES, 'UTF-8');
-                          echo "<td>
-                                  <button onclick='showEditDarowiznaAlert($darowiznaDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
-                                  <button class='btn btn-light' onclick='deleteDarowizna(" . htmlspecialchars($row['ID']) . ")'><i class='fa fa-trash'></i></button>
-                              </td>";
-                          echo "</tr>";
-                      }
-                      oci_free_statement($stid);
-                      oci_free_statement($cursor);
-                      oci_close($conn);
-                  } catch (Exception $e) {
-                      echo "Wystąpił błąd: " . $e->getMessage();
-                  }
-                  ?>
+               <?php 
+                    try {
+                        $sql = "BEGIN :cursor := GET_DAROWIZNY; END;";
+                        $stid = oci_parse($conn, $sql);
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+                        oci_execute($stid);
+                        oci_execute($cursor);
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<tr id='" . htmlspecialchars($row["ID"]) . "'>";
+                            echo "<td>" .
+                                htmlspecialchars($row["NAZWA_UZYTKOWNIKA"]) .
+                                "</td>";
+                            echo "<td>" . htmlspecialchars($row["KWOTA"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["DATA"]) . "</td>";
+                            $darowiznaData = [
+                                "id" => $row["ID"],
+                                "kwota" => $row["KWOTA"],
+                                "data" => $row["DATA"],
+                                "nazwa_uzytkownika" => $row["NAZWA_UZYTKOWNIKA"],
+                            ];
+                            $darowiznaDataJson = htmlspecialchars(
+                                json_encode($darowiznaData),
+                                ENT_QUOTES,
+                                "UTF-8"
+                            );
+                            echo "<td>
+                                        <button onclick='showEditDarowiznaAlert($darowiznaDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-light' onclick='deleteDarowizna(" .
+                                htmlspecialchars($row["ID"]) .
+                                ")'><i class='fa fa-trash'></i></button>
+                                    </td>";
+                            echo "</tr>";
+                        }
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                        oci_close($conn);
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " . $e->getMessage();
+                    } 
+               ?>
             </tbody>
          </table>
       </div>

@@ -1,12 +1,12 @@
 <?php
-    require_once '../db_connection.php';
+    require_once "../db_connection.php";
 
     // Pobranie ID zwierzęcia do usunięcia
-    $animal_id = $_POST['id'];
+    $animal_id = $_POST["id"];
 
     if (empty($animal_id)) {
-        echo json_encode(['success' => false, 'message' => 'Brak ID zwierzęcia.']);
-        exit;
+        echo json_encode(["success" => false, "message" => "Brak ID zwierzęcia."]);
+        exit();
     }
 
     // Przygotowanie wywołania procedury lub zapytania
@@ -20,10 +20,13 @@
     $result = oci_execute($stid);
 
     if ($result) {
-        echo json_encode(['success' => true, 'message' => 'Zwierzę zostało pomyślnie usunięte.']);
+        echo json_encode([
+            "success" => true,
+            "message" => "Zwierzę zostało pomyślnie usunięte.",
+        ]);
     } else {
         $e = oci_error($stid);
-        echo json_encode(['success' => false, 'message' => $e['message']]);
+        echo json_encode(["success" => false, "message" => $e["message"]]);
     }
 
     // Zwolnienie zasobów i zamknięcie połączenia

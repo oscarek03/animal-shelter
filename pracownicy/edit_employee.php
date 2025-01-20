@@ -1,16 +1,16 @@
 <?php
-    require_once '../db_connection.php';
+    require_once "../db_connection.php";
 
+    $id = $_POST["id"];
+    $imie = $_POST["imie"];
+    $nazwisko = $_POST["nazwisko"];
+    $pensja = $_POST["pensja"];
+    $stanowisko = $_POST["stanowisko"];
+    $adres_id = $_POST["adres_id"];
+    $data_zatrudnienia = $_POST["data_zatrudnienia"];
 
-    $id = $_POST['id'];
-    $imie = $_POST['imie'];
-    $nazwisko = $_POST['nazwisko'];
-    $pensja = $_POST['pensja'];
-    $stanowisko = $_POST['stanowisko'];
-    $adres_id = $_POST['adres_id'];
-    $data_zatrudnienia = $_POST['data_zatrudnienia'];
-
-    $sql = "BEGIN edytuj_pracownika(:id, :imie, :nazwisko, :pensja, :stanowisko, :adres_id, TO_DATE(:data_zatrudnienia, 'YYYY-MM-DD')); END;";
+    $sql =
+        "BEGIN edytuj_pracownika(:id, :imie, :nazwisko, :pensja, :stanowisko, :adres_id, TO_DATE(:data_zatrudnienia, 'YYYY-MM-DD')); END;";
     $stid = oci_parse($conn, $sql);
 
     oci_bind_by_name($stid, ":id", $id);
@@ -24,10 +24,10 @@
     $result = oci_execute($stid);
 
     if ($result) {
-        echo json_encode(['success' => true]);
+        echo json_encode(["success" => true]);
     } else {
         $e = oci_error($stid);
-        echo json_encode(['success' => false, 'message' => $e['message']]);
+        echo json_encode(["success" => false, "message" => $e["message"]]);
     }
 
     oci_free_statement($stid);

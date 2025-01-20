@@ -40,35 +40,52 @@
                <select class="form-control" id="newKojec">
                   <option value="" disabled selected>Wybierz kojec</option>
                   <?php
-                    require_once '../db_connection.php';
-                     
-                     try {
-                         // Przygotowanie wywołania funkcji PL/SQL
-                         $sql = "BEGIN :cursor := get_kojce(); END;";
-                         $stid = oci_parse($conn, $sql);
-                     
-                         // Deklaracja kursora jako parametr wyjściowy
-                         $cursor = oci_new_cursor($conn);
-                         oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                     
-                         // Wykonanie funkcji PL/SQL
-                         oci_execute($stid);
-                         oci_execute($cursor);
-                     
-                         // Pętla do generowania opcji select z wyników kursora
-                         while (($row = oci_fetch_assoc($cursor)) != false) {
-                             $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'] . ', ' . $row['WIELKOSC'];
-                             echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
-                         }
-                     
-                         // Zwolnienie zasobów i zamknięcie połączenia
-                         oci_free_statement($stid);
-                         oci_free_statement($cursor);
-                     
-                     } catch (Exception $e) {
-                         echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-                     }
-                     ?>
+                    require_once "../db_connection.php";
+
+                    try {
+                        // Przygotowanie wywołania funkcji PL/SQL
+                        $sql = "BEGIN :cursor := get_kojce(); END;";
+                        $stid = oci_parse($conn, $sql);
+
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Pętla do generowania opcji select z wyników kursora
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            $kojec =
+                                $row["KOJEC_ID"] .
+                                ", " .
+                                $row["NUMER"] .
+                                ", " .
+                                $row["WIELKOSC"];
+                            echo "<option value=\"" .
+                                htmlspecialchars(
+                                    $row["KOJEC_ID"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "\">$kojec</option>";
+                        }
+
+                        // Zwolnienie zasobów i zamknięcie połączenia
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " .
+                            htmlspecialchars($e->getMessage());
+                    }
+                  ?>
                </select>
             </div>
             <h6>Data przyjęcia:</h6>
@@ -99,33 +116,51 @@
                <div class="input-group mb-2">
                   <select class="form-control" id="editKojec">
                      <option value="" disabled selected>Wybierz kojec</option>
-                     <?php
+                     <?php 
                         try {
                             // Przygotowanie wywołania funkcji PL/SQL
                             $sql = "BEGIN :cursor := get_kojce(); END;";
                             $stid = oci_parse($conn, $sql);
-                        
+
                             // Deklaracja kursora jako parametr wyjściowy
                             $cursor = oci_new_cursor($conn);
-                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                        
+                            oci_bind_by_name(
+                                $stid,
+                                ":cursor",
+                                $cursor,
+                                -1,
+                                OCI_B_CURSOR
+                            );
+
                             // Wykonanie funkcji PL/SQL
                             oci_execute($stid);
                             oci_execute($cursor);
-                        
+
                             // Pętla do generowania opcji select z wyników kursora
                             while (($row = oci_fetch_assoc($cursor)) != false) {
-                                $kojec = $row['KOJEC_ID'] . ', ' . $row['NUMER'] . ", " . $row['WIELKOSC'];
-                                echo "<option value=\"" . htmlspecialchars($row['KOJEC_ID'], ENT_QUOTES, 'UTF-8') . "\">$kojec</option>";
+                                $kojec =
+                                    $row["KOJEC_ID"] .
+                                    ", " .
+                                    $row["NUMER"] .
+                                    ", " .
+                                    $row["WIELKOSC"];
+                                echo "<option value=\"" .
+                                    htmlspecialchars(
+                                        $row["KOJEC_ID"],
+                                        ENT_QUOTES,
+                                        "UTF-8"
+                                    ) .
+                                    "\">$kojec</option>";
                             }
-                        
+
                             // Zwolnienie zasobów i zamknięcie połączenia
                             oci_free_statement($stid);
                             oci_free_statement($cursor);
                         } catch (Exception $e) {
-                            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-                        }
-                        ?>
+                            echo "Wystąpił błąd: " .
+                                htmlspecialchars($e->getMessage());
+                        } 
+                     ?>
                   </select>
                </div>
                <input type="date" id="editData_przyjecia" class="form-control mb-2" placeholder="Data przyjecia">
@@ -151,64 +186,113 @@
                </tr>
             </thead>
             <tbody>
-               <?php
-                  try {
-                      // Przygotowanie wywołania funkcji PL/SQL
-                      $sql = "BEGIN :cursor := get_animals_and_cages(); END;";
-                      $stid = oci_parse($conn, $sql);
-                  
-                      // Deklaracja kursora jako parametr wyjściowy
-                      $cursor = oci_new_cursor($conn);
-                      oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                  
-                      // Wykonanie funkcji PL/SQL
-                      oci_execute($stid);
-                      oci_execute($cursor);
-                  
-                      // Pętla do generowania wierszy tabeli z wyników kursora
-                      while (($row = oci_fetch_assoc($cursor)) != false) {
-                          echo "<tr id='" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . "'>";
-                          echo "<td>" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['IMIE'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['RASA'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['PLEC'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['STATUS'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['NUMER'], ENT_QUOTES, 'UTF-8') . ", " . htmlspecialchars($row['WIELKOSC'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['DATA_PRZYJECIA'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['WIEK'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          echo "<td>" . htmlspecialchars($row['TYP'], ENT_QUOTES, 'UTF-8') . "</td>";
-                          
-                          // Przygotowanie danych dla JavaScript
-                          $animalData = [
-                              "id" => $row['ID'],
-                              "imie" => $row['IMIE'],
-                              "rasa" => $row['RASA'],
-                              "plec" => $row['PLEC'],
-                              "status" => $row['STATUS'],
-                              "numer" => $row['NUMER'],
-                              "data_przyjecia" => $row['DATA_PRZYJECIA'],
-                              "wiek" => $row['WIEK'],
-                              "typ" => $row['TYP']
-                          ];
-                          $animalDataJson = htmlspecialchars(json_encode($animalData), ENT_QUOTES, 'UTF-8');
-                      
-                          echo "<td>
-                              <button onclick='showEditAnimalAlert($animalDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
-                              <button class='btn btn-light' onclick='deleteAnimal(" . htmlspecialchars($row['ID'], ENT_QUOTES, 'UTF-8') . ")'><i class='fa fa-trash'></i></button>
-                          </td>";
-                          
-                          echo "</tr>";
-                      }
-                  
-                      // Zwolnienie zasobów i zamknięcie połączenia
-                      oci_free_statement($stid);
-                      oci_free_statement($cursor);
-                      oci_close($conn);
-                  
-                  } catch (Exception $e) {
-                      echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-                  }
-                  ?>
+               <?php 
+                    try {
+                        // Przygotowanie wywołania funkcji PL/SQL
+                        $sql = "BEGIN :cursor := get_animals_and_cages(); END;";
+                        $stid = oci_parse($conn, $sql);
+
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Pętla do generowania wierszy tabeli z wyników kursora
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<tr id='" .
+                                htmlspecialchars($row["ID"], ENT_QUOTES, "UTF-8") .
+                                "'>";
+                            echo "<td>" .
+                                htmlspecialchars($row["ID"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["IMIE"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["RASA"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["PLEC"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars(
+                                    $row["STATUS"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars(
+                                    $row["NUMER"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                ", " .
+                                htmlspecialchars(
+                                    $row["WIELKOSC"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars(
+                                    $row["DATA_PRZYJECIA"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["WIEK"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["TYP"], ENT_QUOTES, "UTF-8") .
+                                "</td>";
+
+                            // Przygotowanie danych dla JavaScript
+                            $animalData = [
+                                "id" => $row["ID"],
+                                "imie" => $row["IMIE"],
+                                "rasa" => $row["RASA"],
+                                "plec" => $row["PLEC"],
+                                "status" => $row["STATUS"],
+                                "numer" => $row["NUMER"],
+                                "data_przyjecia" => $row["DATA_PRZYJECIA"],
+                                "wiek" => $row["WIEK"],
+                                "typ" => $row["TYP"],
+                            ];
+                            $animalDataJson = htmlspecialchars(
+                                json_encode($animalData),
+                                ENT_QUOTES,
+                                "UTF-8"
+                            );
+
+                            echo "<td>
+                                    <button onclick='showEditAnimalAlert($animalDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
+                                    <button class='btn btn-light' onclick='deleteAnimal(" .
+                                htmlspecialchars($row["ID"], ENT_QUOTES, "UTF-8") .
+                                ")'><i class='fa fa-trash'></i></button>
+                                </td>";
+
+                            echo "</tr>";
+                        }
+
+                        // Zwolnienie zasobów i zamknięcie połączenia
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                        oci_close($conn);
+                    } catch (Exception $e) {
+                        echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+                    } 
+               ?>
             </tbody>
          </table>
       </div>

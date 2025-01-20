@@ -58,41 +58,57 @@
             </thead>
             <tbody>
                <?php
-                  require_once '../db_connection.php';;
-                  try {
-                      $sql = "BEGIN :cursor := get_darczyncy; END;";
-                      $stid = oci_parse($conn, $sql);
-                      $cursor = oci_new_cursor($conn);
-                      oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                      oci_execute($stid);
-                      oci_execute($cursor);
-                      while (($row = oci_fetch_assoc($cursor)) != false) {
-                          echo "<tr id='" . htmlspecialchars($row['ID']) . "'>";
-                          echo "<td>" . htmlspecialchars($row['NAZWA_UZYTKOWNIKA']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['IMIE']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['NAZWISKO']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['MAIL']) . "</td>";
-                          $darczyncaData = [
-                              "id" => $row['ID'],
-                              "nazwa_uzytkownika" => $row['NAZWA_UZYTKOWNIKA'],
-                              "imie" => $row['IMIE'],
-                              "nazwisko" => $row['NAZWISKO'],
-                              "mail" => $row['MAIL'],
-                          ];
-                          $darczyncaDataJson = htmlspecialchars(json_encode($darczyncaData), ENT_QUOTES, 'UTF-8');
-                          echo "<td>
-                                  <button onclick='showEditDarczyncaAlert($darczyncaDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
-                                  <button class='btn btn-light' onclick='deleteDarczynca(" . htmlspecialchars($row['ID']) . ")'><i class='fa fa-trash'></i></button>
-                              </td>";
-                          echo "</tr>";
-                      }
-                      oci_free_statement($stid);
-                      oci_free_statement($cursor);
-                      oci_close($conn);
-                  } catch (Exception $e) {
-                      echo "Wystąpił błąd: " . $e->getMessage();
-                  }
-                  ?>
+                require_once "../db_connection.php";
+                try {
+                    $sql = "BEGIN :cursor := get_darczyncy; END;";
+                    $stid = oci_parse($conn, $sql);
+                    $cursor = oci_new_cursor($conn);
+                    oci_bind_by_name(
+                        $stid,
+                        ":cursor",
+                        $cursor,
+                        -1,
+                        OCI_B_CURSOR
+                    );
+                    oci_execute($stid);
+                    oci_execute($cursor);
+                    while (($row = oci_fetch_assoc($cursor)) != false) {
+                        echo "<tr id='" . htmlspecialchars($row["ID"]) . "'>";
+                        echo "<td>" .
+                            htmlspecialchars($row["NAZWA_UZYTKOWNIKA"]) .
+                            "</td>";
+                        echo "<td>" . htmlspecialchars($row["IMIE"]) . "</td>";
+                        echo "<td>" .
+                            htmlspecialchars($row["NAZWISKO"]) .
+                            "</td>";
+                        echo "<td>" . htmlspecialchars($row["MAIL"]) . "</td>";
+                        $darczyncaData = [
+                            "id" => $row["ID"],
+                            "nazwa_uzytkownika" => $row["NAZWA_UZYTKOWNIKA"],
+                            "imie" => $row["IMIE"],
+                            "nazwisko" => $row["NAZWISKO"],
+                            "mail" => $row["MAIL"],
+                        ];
+                        $darczyncaDataJson = htmlspecialchars(
+                            json_encode($darczyncaData),
+                            ENT_QUOTES,
+                            "UTF-8"
+                        );
+                        echo "<td>
+                                    <button onclick='showEditDarczyncaAlert($darczyncaDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
+                                    <button class='btn btn-light' onclick='deleteDarczynca(" .
+                            htmlspecialchars($row["ID"]) .
+                            ")'><i class='fa fa-trash'></i></button>
+                                </td>";
+                        echo "</tr>";
+                    }
+                    oci_free_statement($stid);
+                    oci_free_statement($cursor);
+                    oci_close($conn);
+                } catch (Exception $e) {
+                    echo "Wystąpił błąd: " . $e->getMessage();
+                }
+               ?>
             </tbody>
          </table>
       </div>

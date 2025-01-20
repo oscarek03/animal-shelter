@@ -1,9 +1,9 @@
 <?php
-    require_once '../db_connection.php';
+    require_once "../db_connection.php";
 
     // Pobieramy dane z formularza
-    $numer = $_POST['numer'];
-    $rozmiar = $_POST['rozmiar'];
+    $numer = $_POST["numer"];
+    $rozmiar = $_POST["rozmiar"];
 
     // Przygotowujemy wywołanie procedury
     $sql = "BEGIN DODAJ_KOJEC(:numer, :rozmiar); END;";
@@ -17,10 +17,10 @@
     $result = oci_execute($stid);
 
     if ($result) {
-        echo json_encode(['success' => true]);
+        echo json_encode(["success" => true]);
     } else {
         $e = oci_error($stid);
-        echo json_encode(['success' => false, 'message' => $e['message']]);
+        echo json_encode(["success" => false, "message" => $e["message"]]);
     }
 
     oci_free_statement($stid);

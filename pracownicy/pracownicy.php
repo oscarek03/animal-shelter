@@ -38,40 +38,55 @@
                <select class="form-control" id="newAdres">
                   <option value="" disabled selected>Wybierz adres</option>
                   <?php
-                    require_once '../db_connection.php';
-                     
-                     try {
-                         // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
-                         $sql = "BEGIN :cursor := get_adresy(); END;";
-                         $stid = oci_parse($conn, $sql);
-                     
-                         // Deklaracja kursora jako parametr wyjściowy
-                         $cursor = oci_new_cursor($conn);
-                         oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                     
-                         // Wykonanie funkcji PL/SQL
-                         oci_execute($stid);
-                         oci_execute($cursor);
-                     
-                         // Iteracja przez wyniki zwrocone przez kursor i generowanie opcji do select
-                         while (($row = oci_fetch_assoc($cursor)) != false) {
-                             $adres = htmlspecialchars($row['MIASTO']) . ', ' . 
-                                     htmlspecialchars($row['KOD_POCZTOWY']) . ', ' . 
-                                     htmlspecialchars($row['ULICA']) . ' ' . 
-                                     htmlspecialchars($row['NUMER_DOMU']) . 
-                                     (!empty($row['NUMER_MIESZKANIA']) ? '/' . htmlspecialchars($row['NUMER_MIESZKANIA']) : '');
-                                     
-                             echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">$adres</option>";
-                         }
-                     
-                         // Zwolnienie zasobow
-                         oci_free_statement($stid);
-                         oci_free_statement($cursor);
-                     
-                     } catch (Exception $e) {
-                         echo "Wystapił bład: " . htmlspecialchars($e->getMessage());
-                     }
-                     ?>
+                    require_once "../db_connection.php";
+
+                    try {
+                        // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
+                        $sql = "BEGIN :cursor := get_adresy(); END;";
+                        $stid = oci_parse($conn, $sql);
+
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Iteracja przez wyniki zwrocone przez kursor i generowanie opcji do select
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            $adres =
+                                htmlspecialchars($row["MIASTO"]) .
+                                ", " .
+                                htmlspecialchars($row["KOD_POCZTOWY"]) .
+                                ", " .
+                                htmlspecialchars($row["ULICA"]) .
+                                " " .
+                                htmlspecialchars($row["NUMER_DOMU"]) .
+                                (!empty($row["NUMER_MIESZKANIA"])
+                                    ? "/" .
+                                        htmlspecialchars($row["NUMER_MIESZKANIA"])
+                                    : "");
+
+                            echo "<option value=\"" .
+                                htmlspecialchars($row["ID_ADRESU"]) .
+                                "\">$adres</option>";
+                        }
+
+                        // Zwolnienie zasobow
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                    } catch (Exception $e) {
+                        echo "Wystapił bład: " .
+                            htmlspecialchars($e->getMessage());
+                    }
+                  ?>
                </select>
                <button class="btn btn-plus" onclick="showAddAddressAlert()">+</button>
             </div>
@@ -103,35 +118,44 @@
                   <select class="form-control" id="editAdres">
                      <!-- Opcje załaduja sie dynamicznie -->
                      <option value="" disabled selected>Wybierz adres</option>
-                     <?php
+                     <?php 
                         try {
                             // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
-                            $sql = "BEGIN :cursor := get_formatted_addresses(); END;";
+                            $sql =
+                                "BEGIN :cursor := get_formatted_addresses(); END;";
                             $stid = oci_parse($conn, $sql);
-                        
+
                             // Deklaracja kursora jako parametr wyjściowy
                             $cursor = oci_new_cursor($conn);
-                            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                        
+                            oci_bind_by_name(
+                                $stid,
+                                ":cursor",
+                                $cursor,
+                                -1,
+                                OCI_B_CURSOR
+                            );
+
                             // Wykonanie funkcji PL/SQL
                             oci_execute($stid);
                             oci_execute($cursor);
-                        
+
                             // Iteracja przez wyniki zwrocone przez kursor i generowanie opcji do select
                             while (($row = oci_fetch_assoc($cursor)) != false) {
-                                echo "<option value=\"" . htmlspecialchars($row['ID_ADRESU']) . "\">" . 
-                                    htmlspecialchars($row['FULL_ADDRESS']) . 
+                                echo "<option value=\"" .
+                                    htmlspecialchars($row["ID_ADRESU"]) .
+                                    "\">" .
+                                    htmlspecialchars($row["FULL_ADDRESS"]) .
                                     "</option>";
                             }
-                        
+
                             // Zwolnienie zasobow
                             oci_free_statement($stid);
                             oci_free_statement($cursor);
-                        
                         } catch (Exception $e) {
-                            echo "Wystapił bład: " . htmlspecialchars($e->getMessage());
-                        }
-                        ?>
+                            echo "Wystapił bład: " .
+                                htmlspecialchars($e->getMessage());
+                        } 
+                     ?>
                   </select>
                   <button class="btn btn-plus" type="button" onclick="showAddAddressAlert()">+</button>
                </div>
@@ -154,58 +178,78 @@
                </tr>
             </thead>
             <tbody>
-               <?php
-                  try {
-                      // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
-                      $sql = "BEGIN :cursor := get_pracownicy_with_address(); END;";
-                      $stid = oci_parse($conn, $sql);
-                  
-                      // Deklaracja kursora jako parametr wyjściowy
-                      $cursor = oci_new_cursor($conn);
-                      oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
-                  
-                      // Wykonanie funkcji PL/SQL
-                      oci_execute($stid);
-                      oci_execute($cursor);
-                  
-                      // Iteracja przez wyniki zwrocone przez kursor
-                      while (($row = oci_fetch_assoc($cursor)) != false) {
-                          echo "<tr id='" . htmlspecialchars($row['ID']) . "'>";
-                          echo "<td>" . htmlspecialchars($row['IMIE']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['NAZWISKO']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['PENSJA']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['STANOWISKO']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['FULL_ADDRESS']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['DATA_ZATRUDNIENIA']) . "</td>";
-                  
-                          // Przygotowanie danych dla JavaScript
-                          $employeeData = [
-                              "id" => $row['ID'],
-                              "imie" => $row['IMIE'],
-                              "nazwisko" => $row['NAZWISKO'],
-                              "pensja" => $row['PENSJA'],
-                              "stanowisko" => $row['STANOWISKO'],
-                              "adresId" => $row['FULL_ADDRESS'],
-                              "dataZatrudnienia" => $row['DATA_ZATRUDNIENIA']
-                          ];
-                          $employeeDataJson = htmlspecialchars(json_encode($employeeData), ENT_QUOTES, 'UTF-8');
-                  
-                          echo "<td>
-                                  <button onclick='showEditEmployeeAlert($employeeDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
-                                  <button class='btn btn-light' onclick='deleteEmployee(" . htmlspecialchars($row['ID']) . ")'><i class='fa fa-trash'></i></button>
-                              </td>";
-                          echo "</tr>";
-                      }
-                  
-                      // Zwolnienie zasobow
-                      oci_free_statement($stid);
-                      oci_free_statement($cursor);
-                      oci_close($conn);
-                  
-                  } catch (Exception $e) {
-                      echo "Wystapił bład: " . $e->getMessage();
-                  }
-                  ?>
+               <?php 
+                    try {
+                        // Wywołanie funkcji PL/SQL i przypisanie zwroconego kursora
+                        $sql =
+                            "BEGIN :cursor := get_pracownicy_with_address(); END;";
+                        $stid = oci_parse($conn, $sql);
+
+                        // Deklaracja kursora jako parametr wyjściowy
+                        $cursor = oci_new_cursor($conn);
+                        oci_bind_by_name(
+                            $stid,
+                            ":cursor",
+                            $cursor,
+                            -1,
+                            OCI_B_CURSOR
+                        );
+
+                        // Wykonanie funkcji PL/SQL
+                        oci_execute($stid);
+                        oci_execute($cursor);
+
+                        // Iteracja przez wyniki zwrocone przez kursor
+                        while (($row = oci_fetch_assoc($cursor)) != false) {
+                            echo "<tr id='" . htmlspecialchars($row["ID"]) . "'>";
+                            echo "<td>" . htmlspecialchars($row["IMIE"]) . "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["NAZWISKO"]) .
+                                "</td>";
+                            echo "<td>" . htmlspecialchars($row["PENSJA"]) . "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["STANOWISKO"]) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["FULL_ADDRESS"]) .
+                                "</td>";
+                            echo "<td>" .
+                                htmlspecialchars($row["DATA_ZATRUDNIENIA"]) .
+                                "</td>";
+
+                            // Przygotowanie danych dla JavaScript
+                            $employeeData = [
+                                "id" => $row["ID"],
+                                "imie" => $row["IMIE"],
+                                "nazwisko" => $row["NAZWISKO"],
+                                "pensja" => $row["PENSJA"],
+                                "stanowisko" => $row["STANOWISKO"],
+                                "adresId" => $row["FULL_ADDRESS"],
+                                "dataZatrudnienia" => $row["DATA_ZATRUDNIENIA"],
+                            ];
+                            $employeeDataJson = htmlspecialchars(
+                                json_encode($employeeData),
+                                ENT_QUOTES,
+                                "UTF-8"
+                            );
+
+                            echo "<td>
+                                        <button onclick='showEditEmployeeAlert($employeeDataJson)' class='btn btn-light'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-light' onclick='deleteEmployee(" .
+                                htmlspecialchars($row["ID"]) .
+                                ")'><i class='fa fa-trash'></i></button>
+                                    </td>";
+                            echo "</tr>";
+                        }
+
+                        // Zwolnienie zasobow
+                        oci_free_statement($stid);
+                        oci_free_statement($cursor);
+                        oci_close($conn);
+                    } catch (Exception $e) {
+                        echo "Wystapił bład: " . $e->getMessage();
+                    } 
+               ?>
             </tbody>
          </table>
       

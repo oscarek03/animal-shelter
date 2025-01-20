@@ -1,9 +1,9 @@
 <?php
-    require_once '../db_connection.php';
+    require_once "../db_connection.php";
 
     try {
         // Pobranie ID kojca do usunięcia
-        $kojec_id = $_POST['id'];
+        $kojec_id = $_POST["id"];
 
         if (empty($kojec_id)) {
             throw new Exception("Brak ID kojca.");
@@ -20,14 +20,17 @@
         $result = oci_execute($stid);
 
         if ($result) {
-            echo json_encode(['success' => true, 'message' => 'Kojec został pomyślnie usunięty.']);
+            echo json_encode([
+                "success" => true,
+                "message" => "Kojec został pomyślnie usunięty.",
+            ]);
         } else {
             $e = oci_error($stid);
-            throw new Exception("Błąd podczas usuwania kojca: " . $e['message']);
+            throw new Exception("Błąd podczas usuwania kojca: " . $e["message"]);
         }
     } catch (Exception $e) {
         // Zwracanie błędu w formacie JSON
-        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
     } finally {
         // Zwolnienie zasobów i zamknięcie połączenia
         if (isset($stid)) {

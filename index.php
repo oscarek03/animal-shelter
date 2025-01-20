@@ -40,6 +40,9 @@
     <div class="position-sticky">
       <ul class="nav flex-column">
         <li class="nav-item">
+          <a class="nav-link disabled" href="#">TABELE</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link active" href="./pracownicy/pracownicy.php">Pracownicy</a>
         </li>
         <li class="nav-item">
@@ -80,7 +83,7 @@
       <div class="card">
           <div class="card-body">
           <?php
-            require_once 'db_connection.php';
+            require_once "db_connection.php";
 
             try {
                 // Przygotowanie wywołania funkcji PL/SQL
@@ -99,7 +102,9 @@
                 $row = oci_fetch_assoc($cursor);
 
                 if ($row) {
-                    echo "<h5>Średnia wartość darowizny:</h5> <p>" . htmlspecialchars($row['AVG(KWOTA)']) . " zł</p>";
+                    echo "<h5>Średnia wartość darowizny:</h5> <p>" .
+                        htmlspecialchars($row["AVG(KWOTA)"]) .
+                        " zł</p>";
                 } else {
                     echo "<p>Nie znaleziono wyników.</p>";
                 }
@@ -107,7 +112,6 @@
                 // Zwolnienie zasobów i zamknięcie połączenia
                 oci_free_statement($stid);
                 oci_free_statement($cursor);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
             }
@@ -119,8 +123,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
-
+          <?php 
             try {
                 $sql = "BEGIN :cursor := get_avg_salary(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -134,17 +137,18 @@
                 $row = oci_fetch_assoc($cursor);
 
                 if ($row) {
-                    echo "<h5>Średnia wartość pensji: </h5><p>" . htmlspecialchars($row['AVG(PENSJA)']) . " zł</p>";
+                    echo "<h5>Średnia wartość pensji: </h5><p>" .
+                        htmlspecialchars($row["AVG(PENSJA)"]) .
+                        " zł</p>";
                 } else {
                     echo "<p>Nie znaleziono wyników.</p>";
                 }
 
                 oci_free_statement($stid);
                 oci_free_statement($cursor);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
@@ -153,7 +157,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :cursor := get_sum_donations(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -167,17 +171,18 @@
                 $row = oci_fetch_assoc($cursor);
 
                 if ($row) {
-                    echo "<h5>Łączna wartość darowizn: </h5><p>" . htmlspecialchars($row['SUM(KWOTA)']) . " zł</p>";
+                    echo "<h5>Łączna wartość darowizn: </h5><p>" .
+                        htmlspecialchars($row["SUM(KWOTA)"]) .
+                        " zł</p>";
                 } else {
                     echo "<p>Nie znaleziono wyników.</p>";
                 }
 
                 oci_free_statement($stid);
                 oci_free_statement($cursor);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
@@ -186,7 +191,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :cursor := get_sum_salaries(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -200,18 +205,19 @@
                 $row = oci_fetch_assoc($cursor);
 
                 if ($row) {
-                    echo "<h5>Łączna wartość pensji: </h5><p>" . htmlspecialchars($row['SUM(PENSJA)']) . " zł </p>";
+                    echo "<h5>Łączna wartość pensji: </h5><p>" .
+                        htmlspecialchars($row["SUM(PENSJA)"]) .
+                        " zł </p>";
                 } else {
                     echo "<p>Nie znaleziono wyników.</p>";
                 }
 
                 oci_free_statement($stid);
                 oci_free_statement($cursor);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
-            ?>
+            } 
+          ?>
         </div>
       </div>
     </div>
@@ -220,37 +226,36 @@
       <div class="card">
           <div class="card-body">
       <h5>Statystki Koordynatorów:</h5>
-      <?php
-            try {
-                $sql = "BEGIN :cursor := get_adoption_coordinators_stats(); END;";
-                $stid = oci_parse($conn, $sql);
+      <?php 
+        try {
+            $sql = "BEGIN :cursor := get_adoption_coordinators_stats(); END;";
+            $stid = oci_parse($conn, $sql);
 
-                $cursor = oci_new_cursor($conn);
-                oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
+            $cursor = oci_new_cursor($conn);
+            oci_bind_by_name($stid, ":cursor", $cursor, -1, OCI_B_CURSOR);
 
-                oci_execute($stid);
-                oci_execute($cursor);
+            oci_execute($stid);
+            oci_execute($cursor);
 
-                echo "<table style='width:100%;'>";
-                echo "<tr style='text-align:center;'><th>Imię</th><th>Nazwisko</th><th>Liczba zwierząt</th></tr>";
+            echo "<table style='width:100%;'>";
+            echo "<tr style='text-align:center;'><th>Imię</th><th>Nazwisko</th><th>Liczba zwierząt</th></tr>";
 
-                while (($row = oci_fetch_assoc($cursor)) != false) {
-                    echo "<tr style='text-align:center;'>";
-                    echo "<td>" . htmlspecialchars($row['IMIE']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['NAZWISKO']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['LICZBA_ZWIERZAT']) . "</td>";
-                    echo "</tr>";
-                }
-
-                echo "</table>";
-
-                oci_free_statement($stid);
-                oci_free_statement($cursor);
-
-            } catch (Exception $e) {
-                echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+            while (($row = oci_fetch_assoc($cursor)) != false) {
+                echo "<tr style='text-align:center;'>";
+                echo "<td>" . htmlspecialchars($row["IMIE"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["NAZWISKO"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["LICZBA_ZWIERZAT"]) . "</td>";
+                echo "</tr>";
             }
-          ?>
+
+            echo "</table>";
+
+            oci_free_statement($stid);
+            oci_free_statement($cursor);
+        } catch (Exception $e) {
+            echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+        } 
+      ?>
         </div>
       </div>
     </div>
@@ -259,7 +264,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :result := COUNT_MIXED_BREED_DOGS(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -269,13 +274,14 @@
 
                 oci_execute($stid);
 
-                echo "<h5>Liczba psów (Mieszanców): </h5><p>" . htmlspecialchars($result) . "</p>";
+                echo "<h5>Liczba psów (Mieszanców): </h5><p>" .
+                    htmlspecialchars($result) .
+                    "</p>";
 
                 oci_free_statement($stid);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
@@ -284,7 +290,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :result := COUNT_NON_MIXED_BREED_DOGS(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -294,13 +300,14 @@
 
                 oci_execute($stid);
 
-                echo "<h5>Liczba psów (Rasowych): </h5><p>" . htmlspecialchars($result) . "</p>";
+                echo "<h5>Liczba psów (Rasowych): </h5><p>" .
+                    htmlspecialchars($result) .
+                    "</p>";
 
                 oci_free_statement($stid);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
@@ -309,7 +316,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :result := COUNT_MIXED_BREED_CATS(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -319,13 +326,14 @@
 
                 oci_execute($stid);
 
-                echo "<h5>Liczba kotów (Mieszanców): </h5><p>" . htmlspecialchars($result) . "</p>";
+                echo "<h5>Liczba kotów (Mieszanców): </h5><p>" .
+                    htmlspecialchars($result) .
+                    "</p>";
 
                 oci_free_statement($stid);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
@@ -334,7 +342,7 @@
     <div class="col-md-6 mb-4">
       <div class="card">
           <div class="card-body">
-          <?php
+          <?php 
             try {
                 $sql = "BEGIN :result := COUNT_NON_MIXED_BREED_CATS(); END;";
                 $stid = oci_parse($conn, $sql);
@@ -344,13 +352,14 @@
 
                 oci_execute($stid);
 
-                echo "<h5>Liczba kotów (Rasowych): </h5><p>" . htmlspecialchars($result) . "</p>";
+                echo "<h5>Liczba kotów (Rasowych): </h5><p>" .
+                    htmlspecialchars($result) .
+                    "</p>";
 
                 oci_free_statement($stid);
-
             } catch (Exception $e) {
                 echo "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
-            }
+            } 
           ?>
         </div>
       </div>
